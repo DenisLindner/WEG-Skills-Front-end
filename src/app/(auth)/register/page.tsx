@@ -97,7 +97,7 @@ export default function RegisterPage() {
 
                         <div>
                             <div className="mt-6 flex justify-center">
-                                <Button className="rounded-lg bg-[#005294] px-10 py-4.5 text-base font-medium text-white hover:bg-[#003d70]">
+                                <Button className="cursor-pointer rounded-lg border-2 border-[#005294] bg-[#005294] px-10 py-4.5 text-base font-medium text-white transition-colors hover:bg-white hover:text-[#005294]">
                                     Registrar-se
                                 </Button>
                             </div>
