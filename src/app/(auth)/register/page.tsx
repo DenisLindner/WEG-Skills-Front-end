@@ -28,7 +28,7 @@ export default function RegisterPage() {
 
             {/* Coluna da Direita (com o Card) */}
             <div className="flex w-[45%] items-center justify-center p-4 bg-[#005294]">
-                <Card className="w-full max-w-[500px] border-none p-6 sm:p-12 shadow-2xl rounded-2xl">
+                <Card className="w-full max-w-[500px] bg-white border-none p-6 sm:p-12 shadow-2xl rounded-2xl">
                     <CardHeader className="flex flex-col items-center gap-6 pb-5 text-center">
                         <CardTitle className="text-[40px] sm:text-[42px] font-light text-[#005294] tracking-wide">
                             REGISTRO
