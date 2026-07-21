@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/card";
+import { Input } from "@/components/atoms/input";
+import { Label } from "@/components/atoms/label";
+import { Button } from "@/components/atoms/button";
+import { Separator } from "@/components/atoms/separator";
 
 import Image from "next/image";
 
@@ -28,7 +28,7 @@ export default function RegisterPage() {
 
             {/* Coluna da Direita (com o Card) */}
             <div className="flex w-[45%] items-center justify-center p-4 bg-[#005294]">
-                <Card className="w-full max-w-[500px] border-none p-6 sm:p-12 shadow-2xl rounded-2xl">
+                <Card className="w-full max-w-[500px] bg-white border-none p-6 sm:p-12 shadow-2xl rounded-2xl">
                     <CardHeader className="flex flex-col items-center gap-6 pb-5 text-center">
                         <CardTitle className="text-[40px] sm:text-[42px] font-light text-[#005294] tracking-wide">
                             REGISTRO
@@ -97,7 +97,7 @@ export default function RegisterPage() {
 
                         <div>
                             <div className="mt-6 flex justify-center">
-                                <Button className="rounded-lg bg-[#005294] px-10 py-4.5 text-base font-medium text-white hover:bg-[#003d70]">
+                                <Button className="cursor-pointer rounded-lg border-2 border-[#005294] bg-[#005294] px-10 py-4.5 text-base font-medium text-white transition-colors hover:bg-white hover:text-[#005294]">
                                     Registrar-se
                                 </Button>
                             </div>
