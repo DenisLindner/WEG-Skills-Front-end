@@ -1,6 +1,8 @@
+import InfoCarousel from "@/components/molecules/InfoCarousel";
 export default function Home() {
   return (
-    <div>
-    </div>
+   <>
+    <InfoCarousel/> 
+    </> 
   );
 }
