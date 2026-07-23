@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import Header from "@/components/molecules/header";
+import Footer from "@/components/molecules/footer";
 
 const interSans = Inter({
   variable: "--font-sans",
@@ -22,7 +23,7 @@ export default function RootLayout({children}: Readonly<{
       <body className="min-h-full flex flex-col">
         <Header/>
         {children}
-
+        <Footer />
       </body>
     </html>
   );
