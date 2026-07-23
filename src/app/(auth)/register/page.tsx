@@ -2,46 +2,50 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/car
 import { Input } from "@/components/atoms/input";
 import { Label } from "@/components/atoms/label";
 import { Button } from "@/components/atoms/button";
-import { Separator } from "@/components/atoms/separator";
 
 import Image from "next/image";
 
 export default function RegisterPage() {
     return (
-        <main className="flex h-screen w-full">
-            {/* Coluna da Esquerda (com imagem da fábrica, overlay e Logo) */}
-            <div className="relative w-[60%] bg-[url('/assets/images/fabric.png')] bg-cover bg-center flex items-center justify-center">
-                {/* Overlay preto com 50% de opacidade */}
+        <main className="flex flex-1 min-h-[calc(100vh-4rem)] w-full flex-col lg:flex-row">
+            <div className="hidden lg:flex relative lg:w-[55%] xl:w-[60%] bg-[url('/assets/images/fabric.png')] bg-cover bg-center items-center justify-center p-8">
                 <div className="absolute inset-0 bg-black/50" />
 
-                {/* Logo (z-10 para ficar por cima do overlay preto) */}
-                <div className="z-10">
+                <div className="z-10 flex justify-center w-full px-4">
                     <Image
                         src="/assets/icons/Logo WEG Skills Branca.svg"
                         alt="WEG Skills Logo"
                         width={575}
                         height={100}
+                        className="w-4/5 max-w-[500px] h-auto object-contain"
                         priority
                     />
                 </div>
             </div>
 
-            {/* Coluna da Direita (com o Card) */}
-            <div className="flex w-[45%] items-center justify-center p-4 bg-[#005294]">
-                <Card className="w-full max-w-[500px] bg-white border-none p-6 sm:p-12 shadow-2xl rounded-2xl">
-                    <CardHeader className="flex flex-col items-center gap-6 pb-5 text-center">
-                        <CardTitle className="text-[40px] sm:text-[42px] font-light text-[#005294] tracking-wide">
+            <div className="flex flex-1 flex-col w-full lg:w-[45%] xl:w-[40%] items-center justify-center p-4 sm:p-8 bg-[#005294] gap-6">
+                <div className="lg:hidden my-2">
+                    <Image
+                        src="/assets/icons/Logo WEG Skills Branca.svg"
+                        alt="WEG Skills Logo"
+                        width={360}
+                        height={64}
+                        className="h-14 sm:h-16 w-auto object-contain"
+                        priority
+                    />
+                </div>
+
+                <Card className="w-full max-w-[500px] bg-white border-none p-6 sm:p-10 shadow-2xl rounded-2xl">
+                    <CardHeader className="flex flex-col items-center gap-4 sm:gap-6 pb-5 text-center">
+                        <CardTitle className="text-3xl sm:text-[40px] font-light text-[#005294] tracking-wide">
                             REGISTRO
                         </CardTitle>
 
-                        {/* Linha divisória de Registro para Email */}
                         <div className="h-0.5 w-full max-w-[80%] rounded-full bg-[#005294] mb-3" />
                     </CardHeader>
 
-                    {/* Div 1: Email */}
-
-                    <CardContent className="flex flex-col gap-8">
-                        <div className="group relative flex flex-col pt-6 w-[85%] mx-auto">
+                    <CardContent className="flex flex-col gap-6 sm:gap-8">
+                        <div className="group relative flex flex-col pt-6 w-full sm:w-[85%] mx-auto">
                             <Input
                                 id="email"
                                 type="email"
@@ -57,9 +61,7 @@ export default function RegisterPage() {
                             </Label>
                         </div>
 
-                        {/* Div 2: Senha */}
-
-                        <div className="group relative flex flex-col pt-6 w-[85%] mx-auto">
+                        <div className="group relative flex flex-col pt-6 w-full sm:w-[85%] mx-auto">
                             <Input
                                 id="password"
                                 type="password"
@@ -75,9 +77,7 @@ export default function RegisterPage() {
                             </Label>
                         </div>
 
-                        {/* Div 3: Confirmar Senha */}
-
-                        <div className="group relative flex flex-col pt-6 w-[85%] mx-auto">
+                        <div className="group relative flex flex-col pt-6 w-full sm:w-[85%] mx-auto">
                             <Input
                                 id="confirm-password"
                                 type="password"
@@ -93,11 +93,9 @@ export default function RegisterPage() {
                             </Label>
                         </div>
 
-                        {/* Div 4: Botão Registrar-se */}
-
                         <div>
-                            <div className="mt-6 flex justify-center">
-                                <Button className="cursor-pointer rounded-lg border-2 border-[#005294] bg-[#005294] px-10 py-4.5 text-base font-medium text-white transition-colors hover:bg-white hover:text-[#005294]">
+                            <div className="mt-4 sm:mt-6 flex justify-center">
+                                <Button className="w-full sm:w-auto cursor-pointer rounded-lg border-2 border-[#005294] bg-[#005294] px-10 py-4.5 text-base font-medium text-white transition-colors hover:bg-white hover:text-[#005294]">
                                     Registrar-se
                                 </Button>
                             </div>
