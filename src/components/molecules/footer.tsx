@@ -21,7 +21,7 @@ export default function Footer() {
                                 className="h-9 w-auto object-contain"
                             />
                         </Link>
-                        <p className="text-xs sm:text-sm font-medium text-slate-500 leading-relaxed pt-2">
+                        <p className="text-xs sm:text-sm font-medium text-slate-500 leading-relaxed pt-5">
                             Plataforma de capacitação profissional e desenvolvimento de competências da WEG.
                         </p>
                     </div>
