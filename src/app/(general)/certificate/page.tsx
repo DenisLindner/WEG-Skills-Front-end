@@ -12,18 +12,21 @@ export default function VerifyCertificate() {
                     </CardTitle>
                 </CardHeader>
 
-                <CardContent className="p-0 flex flex-col gap-6 items-start">
-                    <div className="w-full">
-                        <Input
-                            id="certificate"
-                            type="text"
-                            placeholder="Nº Certificado"
-                            className="h-12 w-full bg-white border border-[#005294] rounded-md px-4 text-lg font-semibold text-slate-800 placeholder:text-[#555555] placeholder:font-semibold focus-visible:ring-1 focus-visible:ring-[#005294] placeholder:text-base"
-                        />
-                    </div>
-                    <Button className="h-11 px-8 bg-[#20699c] hover:bg-[#005294] text-white font-semibold text-base rounded-md transition-colors cursor-pointer">
-                        Verificar
-                    </Button>
+                <CardContent className="p-0">
+                    <form className="flex flex-col gap-6 items-start">
+                        <div className="w-full">
+                            <Input
+                                id="certificate"
+                                type="text"
+                                placeholder="Nº Certificado"
+                                required
+                                className="h-12 w-full bg-white border border-[#005294] rounded-md px-4 text-lg font-semibold text-slate-800 placeholder:text-[#555555] placeholder:font-semibold focus-visible:ring-1 focus-visible:ring-[#005294] placeholder:text-base"
+                            />
+                        </div>
+                        <Button type="submit" className="h-11 px-8 bg-[#20699c] hover:bg-[#005294] text-white font-semibold text-base rounded-md transition-colors cursor-pointer">
+                            Verificar
+                        </Button>
+                    </form>
                 </CardContent>
             </Card>
         </main>
