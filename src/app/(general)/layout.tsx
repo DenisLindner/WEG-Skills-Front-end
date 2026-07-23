@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
+import Header from "@/components/molecules/header";
 
 const interSans = Inter({
   variable: "--font-sans",
@@ -12,17 +13,18 @@ export const metadata: Metadata = {
   description: "Buildt by CentroWEG",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+export default function RootLayout({children}: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
-    <html
-      lang="pt-BR"
-      className={`${interSans.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="pt-BR" className={`${interSans.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col">
+        <Header/>
+        {children}
+
+      </body>
     </html>
   );
+
 }
