@@ -6,96 +6,95 @@ import { Button } from "@/components/atoms/button"
 import { cn } from "@/lib/utils"
 
 export interface CourseCardProps {
-  imageSrc?: string
-  imageAlt?: string
   title: string
   description: string
-  /**
-   * Nota do curso (0 a 10).
-   * Ex: 8 (preenche 4 estrelas), 7.5 (preenche 3.75 estrelas), 2 (preenche 1 estrela).
-   */
-  rating: number
-  /**
-   * Escala máxima da nota.
-   * @default 10
-   */
-  maxScore?: number
-  buttonText?: string
-  onButtonClick?: () => void
-  /**
-   * Se true, desabilita a interação direta do usuário nas estrelas.
-   * @default true
-   */
-  readOnlyRating?: boolean
+  rate: number
+  imageUrl?: string
+  onEnroll?: () => void
   className?: string
 }
 
-/**
- * Componente Molecule: CourseCard
- * 
- * Classificado como **Molecule** no Atomic Design pois combina múltiplos átomos 
- * (Rating, Button, elementos de mídia e tipografia) para formar uma unidade funcional.
- */
 export function CourseCard({
-  imageSrc,
-  imageAlt = "Imagem do curso",
   title,
   description,
-  rating,
-  maxScore = 10,
-  buttonText = "Matricular",
-  onButtonClick,
-  readOnlyRating = true, // Desabilitado clique por padrão
+  rate,
+  imageUrl,
+  onEnroll,
   className,
 }: CourseCardProps) {
+  const [isOpen, setIsOpen] = React.useState(false)
+
   return (
     <div
       className={cn(
-        "w-full max-w-[280px] bg-white rounded-lg border border-slate-200 shadow-sm p-4 flex flex-col justify-between gap-4 transition-all hover:shadow-md",
+        "w-full bg-white rounded-xl border border-slate-200/80 shadow-sm p-4 transition-all duration-200 hover:shadow-md",
+        "md:max-w-[280px] md:flex md:flex-col md:justify-between md:gap-4",
         className
       )}
     >
-      {/* Banner / Área da imagem */}
-      <div className="w-full h-36 bg-slate-200 rounded-md flex items-center justify-center overflow-hidden">
-        {imageSrc ? (
-          <img
-            src={imageSrc}
-            alt={imageAlt}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <span className="text-slate-500 font-medium text-lg">imagem</span>
-        )}
-      </div>
-
-      {/* Conteúdo textual e Avaliação */}
-      <div className="flex flex-col gap-2">
-        <h3 className="text-xl font-semibold text-slate-900 leading-tight">
-          {title}
-        </h3>
-        <p className="text-sm text-slate-500 line-clamp-2">
-          {description}
-        </p>
-        
-        {/* Atom: Rating */}
-        <div className="pt-1">
-          <Rating
-            value={rating}
-            maxScore={maxScore}
-            maxStars={5}
-            readOnly={readOnlyRating}
-            size="md"
-          />
-        </div>
-      </div>
-
-      {/* Atom: Button */}
-      <Button
-        onClick={onButtonClick}
-        className="w-full bg-[#00579D] hover:bg-[#004780] text-white font-medium py-2 h-auto text-base rounded-md"
+      {/* Mobile Accordion Header */}
+      <div
+        onClick={() => setIsOpen((prev) => !prev)}
+        className="flex items-center justify-between cursor-pointer md:hidden gap-2 select-none"
       >
-        {buttonText}
-      </Button>
+        <div className="flex flex-col gap-1">
+          <h3 className="text-sm font-semibold text-slate-900 leading-tight">
+            {title}
+          </h3>
+          <Rating rate={rate} />
+        </div>
+        <button
+          type="button"
+          aria-label="Toggle course details"
+          className="p-1 text-[#00579D] hover:bg-slate-100 rounded-full transition-transform"
+        >
+          <svg
+            className={cn("w-5 h-5 transition-transform duration-200", isOpen && "rotate-180")}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Card Body: Always visible on Desktop, collapsible on Mobile */}
+      <div
+        className={cn(
+          "flex flex-col gap-4",
+          !isOpen && "hidden md:flex"
+        )}
+      >
+        {/* Banner / Image Area */}
+        <div className="w-full h-32 sm:h-36 bg-slate-200 rounded-lg flex items-center justify-center overflow-hidden mt-3 md:mt-0">
+          {imageUrl ? (
+            <img src={imageUrl} alt={title} className="w-full h-full object-cover" />
+          ) : (
+            <span className="text-slate-500 font-medium text-base sm:text-lg">imagem</span>
+          )}
+        </div>
+
+        {/* Text Details & Rating (Desktop layout) */}
+        <div className="flex flex-col gap-2">
+          <h3 className="hidden md:block text-xl font-semibold text-slate-900 leading-tight">
+            {title}
+          </h3>
+          <p className="text-xs sm:text-sm text-slate-500 line-clamp-2">{description}</p>
+          <div className="hidden md:block pt-1">
+            <Rating rate={rate} />
+          </div>
+        </div>
+
+        {/* Action Button */}
+        <Button
+          onClick={onEnroll}
+          className="w-full bg-[#00579D] hover:bg-[#004780] text-white font-medium py-2 h-auto text-sm sm:text-base rounded-md"
+        >
+          Matricular
+        </Button>
+      </div>
     </div>
   )
 }
