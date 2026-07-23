@@ -1,98 +1,94 @@
 "use client"
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious
-} from "@/components/atoms/carousel";
 
-import CardInfo from "@/components/atoms/cardInfo";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/atoms/carousel"
+
+import CardInfo from "@/components/atoms/cardInfo"
 import * as React from "react"
 import Autoplay from "embla-carousel-autoplay"
+import { User, BookOpen, GraduationCap, Hourglass, Factory, Unlock } from "lucide-react"
 
 export default function InfoCarousel() {
-    
-    const plugin = React.useRef(
-        Autoplay({ delay: 2000, stopOnInteraction: true })
-    )
+  const plugin = React.useRef(
+    Autoplay({ delay: 2500, stopOnInteraction: false, stopOnMouseEnter: true })
+  )
 
-    let card1 = {
-        id: 1,
-        icon:"/assets/icons/circle-user-solid-full.svg",
-        alt:"Um profissional capacitado",
-        titulo: "Profissionais",
-        subtitulo: "Capacitados",
-        dados: "+10.000"
-    }
+  const cards = [
+    {
+      id: 1,
+      icon: User,
+      titulo: "Profissionais",
+      subtitulo: "Capacitados",
+      dados: "+10.000",
+    },
+    {
+      id: 2,
+      icon: BookOpen,
+      titulo: "Cursos ",
+      subtitulo: "Fornecidos",
+      dados: "+50",
+    },
+    {
+      id: 3,
+      icon: GraduationCap,
+      titulo: "Turmas ",
+      subtitulo: "qualificadas",
+      dados: "+100",
+    },
+    {
+      id: 4,
+      icon: Hourglass,
+      titulo: "Anos de ",
+      subtitulo: "mercado",
+      dados: "+50",
+    },
+    {
+      id: 5,
+      icon: Factory,
+      titulo: "Empresas ",
+      subtitulo: "Beneficiadas",
+      dados: "+70",
+    },
+    {
+      id: 6,
+      icon: Unlock,
+      titulo: "Cursos",
+      subtitulo: "Gratuitos",
+      dados: "+35",
+    },
+  ]
 
-    let card2 = {
-        id: 2,
-        icon:"/assets/icons/book-solid-full.svg",
-        alt:"Um livro",
-        titulo: "Cursos ",
-        subtitulo: "Fornecidos",
-        dados: "+50"
-    }
-
-    let card3 = {
-        id: 3,
-        icon:"/assets/icons/chalkboard-user-solid-full.svg",
-        alt:"Pessoa utilizando um quadro branco",
-        titulo: "Turmas ",
-        subtitulo: "qualificadas",
-        dados: "+100"
-    }
-
-    let card4 = {
-        id: 4,
-        icon:"/assets/icons/hourglass-solid-full.svg",
-        alt:"Uma ampulheta",
-        titulo: "Anos de ",
-        subtitulo: "mercado",
-        dados: "+50"
-    }
-
-    let card5 = {
-        id: 5,
-        icon:"/assets/icons/industry-solid-full.svg",
-        alt:"Uma empresa",
-        titulo: "Empresas ",
-        subtitulo: "Beneficiadas",
-        dados: "+70"
-    }
-
-    let card6 = {
-        id: 6,
-        icon:"/assets/icons/unlock-solid-full.svg",
-        alt:"Uma cadeado aberto",
-        titulo: "Cursos",
-        subtitulo: "Gratuitos",
-        dados: "+35"
-    }
-
-    let cards = [
-        card1, card2, card3, card4, card5, card6
-    ]
-
-    return (
-        <section className="h-fit flex items-center flex-col">
-            <div className=""><h2 className="text-[50px] text-[#00579D] font-bold w-full text-center">Informação sobre a WEG Skills</h2></div>
-            <div className="flex justify-center items-center">
-                <Carousel className="w-[100%]"
-                    plugins={[plugin.current]}
-                    onMouseEnter={() => plugin.current.stop()}
-                    onMouseLeave={() => plugin.current.reset()}
-                >
-                    <CarouselContent className="-ml-1">
-                        {cards.map((card) => (
-                            <CarouselItem key={card.id} className="basis-full pl-[12px] min-[376px]:basis-1/2  md:basis-1/3 lg:basis-1/4 flex items-center shrink-0">
-                                <CardInfo Card={card} />
-                            </CarouselItem>
-                        ))}
-                    </CarouselContent>
-                </Carousel>
-            </div>
-        </section>
-    );
+  return (
+    <section className="w-full max-w-full overflow-hidden py-6 flex flex-col items-center">
+      <div className="w-full text-center mb-6 px-4">
+        <h2 className="text-2xl sm:text-4xl md:text-[50px] text-[#00579D] font-bold leading-tight">
+          Informação sobre a WEG Skills
+        </h2>
+      </div>
+      <div className="w-full max-w-6xl px-4 overflow-hidden flex justify-center items-center">
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          className="w-full"
+          plugins={[plugin.current]}
+        >
+          <CarouselContent className="-ml-2 md:-ml-4">
+            {cards.map((card) => (
+              <CarouselItem
+                key={card.id}
+                className="pl-2 md:pl-4 basis-full min-[540px]:basis-1/2 md:basis-1/3 lg:basis-1/4 flex justify-center items-center py-2"
+              >
+                <CardInfo Card={card} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+      </div>
+    </section>
+  )
 }
