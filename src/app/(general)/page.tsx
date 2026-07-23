@@ -1,29 +1,31 @@
-"use client";
+"use client"
 
-import CourseCard from "@/components/molecules/course-card";
-import InfoCarousel from "@/components/molecules/InfoCarousel";
+import CourseCard from "@/components/molecules/course-card"
+import InfoCarousel from "@/components/molecules/InfoCarousel"
 
 export default function Home() {
   return (
-    <>
+    <main className="w-full min-h-screen py-6 px-4 flex flex-col items-center gap-8">
       <InfoCarousel />
-      <div className="p-4 flex gap-4 flex-wrap">
-        {/* Exemplo de card com nota 2/10 (equivale a 1 estrela preenchida) */}
+      
+      {/* Grid: 1 coluna no mobile, exatamente 3 colunas lado a lado no desktop (md:grid-cols-3) */}
+      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
         <CourseCard
           title="Ferramentaria para Sistemas WEB"
           description="Uma breve descrição sobre"
-          rating={2}
-          buttonText="Matricular"
+          rate={2}
         />
-
-        {/* Exemplo de card com nota 8/10 (equivale a 4 estrelas preenchidas) */}
         <CourseCard
-          title="Desenvolvimento React & Next.js"
-          description="Aprenda a criar aplicações modernas"
-          rating={8}
-          buttonText="Matricular"
+          title="Ferramentaria para Sistemas WEB"
+          description="Uma breve descrição sobre"
+          rate={2}
+        />
+        <CourseCard
+          title="Ferramentaria para Sistemas WEB"
+          description="Uma breve descrição sobre"
+          rate={2}
         />
       </div>
-    </>
-  );
+    </main>
+  )
 }
