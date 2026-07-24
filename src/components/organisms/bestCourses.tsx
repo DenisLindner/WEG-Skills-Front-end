@@ -52,8 +52,6 @@ export default function bestCourse() {
                         variant={ativo2 ? "default" : "outline"}
                         onClick={() => {
                             setAtivo2(!ativo2)
-                            setAtivo1(ativo1)
-                            setAtivo3(ativo3)
                         }}
                         className={
                             ativo2 ?

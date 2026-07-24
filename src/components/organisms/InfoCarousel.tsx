@@ -76,13 +76,8 @@ export default function InfoCarousel() {
     ]
 
     return (
-<<<<<<< HEAD
         <section className="h-fit flex items-center flex-col mt-[5vh]">
             <div className=""><h2 className="text-[50px] text-[#00579D] font-bold w-full text-center ">Informação sobre a WEG Skills</h2></div>
-=======
-        <section className="h-fit flex items-center flex-col">
-            <div className=""><h2 className="text-[50px] text-[#00579D] font-bold w-full text-center">Informação sobre a WEG Skills</h2></div>
->>>>>>> 9b5905ba41e68636dd121e0b67b7d83e647f7d5b
             <div className="flex justify-center items-center">
                 <Carousel className="w-[100%]"
                     plugins={[plugin.current]}
