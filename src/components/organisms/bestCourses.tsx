@@ -76,7 +76,7 @@ export default function bestCourse() {
                 {
                     cards.map((card) => (
                         <CourseCard
-                            key={}
+                            key={card.id}
                             imageUrl={card.ImageLink}
                             title={card.title}
                             description={card.description}
