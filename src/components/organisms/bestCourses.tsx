@@ -10,6 +10,7 @@ export default function bestCourse() {
     const [ativo3, setAtivo3] = useState(false);
 
     let card1 = {
+        id:1,
         /* https://unsplash.com/pt-br/fotografias/tela-de-computador-exibindo-linhas-de-codigo-Pu27coP2jPk */
         ImageLink: "/assets/images/web-tools.jpg",
         title: "Ferramentaria para Sistemas WEB",
@@ -18,6 +19,7 @@ export default function bestCourse() {
     }
 
     let card2 = {
+        id:2,
         /* https://unsplash.com/pt-br/fotografias/tela-de-computador-exibindo-linhas-de-codigo-Pu27coP2jPk */
         ImageLink: "/assets/images/eletric-tools.jpg",
         title: "Ferramentaria para Sistemas Elétricos",
@@ -26,6 +28,7 @@ export default function bestCourse() {
     }
 
     let card3 = {
+        id:3,
         /* https://unsplash.com/pt-br/fotografias/uma-grande-variedade-de-antenas-parabolicas-sentados-em-cima-de-uma-estrada-de-terra--34L9zLtCcM */
         ImageLink: "/assets/images/astronomical-tools.jpg",
         title: "Ferramentaria para Sistemas Astronômicos",
@@ -73,6 +76,7 @@ export default function bestCourse() {
                 {
                     cards.map((card) => (
                         <CourseCard
+                            key={}
                             imageUrl={card.ImageLink}
                             title={card.title}
                             description={card.description}
