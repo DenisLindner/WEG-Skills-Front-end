@@ -5,5 +5,7 @@ import CardAbout from "@/components/atoms/card-about";
 
 export default function Home() {
   return (
+    <>
+    </>
   );
 }
