@@ -30,10 +30,7 @@ export default function Header({ isLoggedIn = false }: HeaderProps = {}) {
   */
   const loggedInRoutes = [
     "/issue_certificate",
-    "/meus-cursos",
-    "/perfil",
-    "/dashboard",
-    "/configuracoes"
+    "/profile"
   ]
 
   const isLoggedRoute = loggedInRoutes.some(route => pathname?.startsWith(route))
