@@ -3,8 +3,6 @@
 import React, { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Button } from "@/components/atoms/button"
 import {
   Sheet,
   SheetContent,
@@ -13,35 +11,10 @@ import {
   SheetTrigger,
 } from "@/components/atoms/sheet"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Menu01Icon } from "@hugeicons/core-free-icons"
-import HeaderLogged from "./header-logged"
+import { Menu01Icon, UserIcon } from "@hugeicons/core-free-icons"
 
-interface HeaderProps {
-  isLoggedIn?: boolean
-}
-
-export default function Header({ isLoggedIn = false }: HeaderProps = {}) {
-  const pathname = usePathname()
+export default function HeaderLogged() {
   const [open, setOpen] = useState(false)
-
-  // Rotas que devem exibir automaticamente o cabeçalho de usuário logado
-  /* Caso tenha uma tela nova que utilize o Header logado, coloque o nome da 
-     página aqui
-  */
-  const loggedInRoutes = [
-    "/issue_certificate",
-    "/meus-cursos",
-    "/perfil",
-    "/dashboard",
-    "/configuracoes"
-  ]
-
-  const isLoggedRoute = loggedInRoutes.some(route => pathname?.startsWith(route))
-
-  // Se passou a prop isLoggedIn=true OU se estiver em uma rota de usuário autenticado
-  if (isLoggedIn || isLoggedRoute) {
-    return <HeaderLogged />
-  }
 
   return (
     <header className="w-full bg-[#00579D] text-white shadow-md">
@@ -58,28 +31,28 @@ export default function Header({ isLoggedIn = false }: HeaderProps = {}) {
           />
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-8 md:flex">
-          <Link
-            href="#certificado"
-            className="relative py-0.5 text-sm font-medium text-white after:content-[''] after:absolute after:left-0 after:bottom-[1px] after:h-px after:w-full after:bg-white after:scale-x-0 after:origin-left after:transition-transform after:duration-500 after:ease-out hover:after:scale-x-100"
-          >
-            Certificado
-          </Link>
-          <Link
-            href="#sobre"
-            className="relative py-0.5 text-sm font-medium text-white after:content-[''] after:absolute after:left-0 after:bottom-[1px] after:h-px after:w-full after:bg-white after:scale-x-0 after:origin-left after:transition-transform after:duration-500 after:ease-out hover:after:scale-x-100"
-          >
-            Sobre
-          </Link>
-          <Button
-            nativeButton={false}
-            render={<Link href="#login" />}
-            className="bg-white text-[#00579D] border-2 border-white font-medium px-4 py-1.5 h-auto text-sm rounded-lg transition-colors hover:bg-[#005294] hover:text-white bg-clip-border"
-          >
-            Login
-          </Button>
-        </nav>
+        {/* Desktop Navigation & User Profile */}
+        <div className="hidden items-center gap-8 md:flex">
+          <nav className="flex items-center gap-8">
+            <Link
+              href="#certificado"
+              className="relative py-0.5 text-sm font-medium text-white after:content-[''] after:absolute after:left-0 after:bottom-[1px] after:h-px after:w-full after:bg-white after:scale-x-0 after:origin-left after:transition-transform after:duration-500 after:ease-out hover:after:scale-x-100"
+            >
+              Certificado
+            </Link>
+            <Link
+              href="#sobre"
+              className="relative py-0.5 text-sm font-medium text-white after:content-[''] after:absolute after:left-0 after:bottom-[1px] after:h-px after:w-full after:bg-white after:scale-x-0 after:origin-left after:transition-transform after:duration-500 after:ease-out hover:after:scale-x-100"
+            >
+              Sobre
+            </Link>
+          </nav>
+
+          {/* Avatar / Profile Icon */}
+          <div className="size-9 rounded-full bg-[#D9D9D9] border border-white/20 flex items-center justify-center text-slate-700 cursor-pointer hover:opacity-90 transition-opacity shadow-sm" title="Miguel dos Santos">
+            <HugeiconsIcon icon={UserIcon} className="size-5" strokeWidth={2} />
+          </div>
+        </div>
 
         {/* Mobile Hamburger Menu */}
         <div className="md:hidden">
@@ -126,14 +99,15 @@ export default function Header({ isLoggedIn = false }: HeaderProps = {}) {
                 </nav>
               </div>
 
-              <div className="mt-auto pt-6 border-t border-white/20">
-                <Button
-                  nativeButton={false}
-                  render={<Link href="#login" onClick={() => setOpen(false)} />}
-                  className="w-full bg-white text-[#00579D] hover:bg-white/90 font-medium py-2.5 h-auto text-base rounded transition-colors text-center justify-center"
-                >
-                  Login
-                </Button>
+              {/* Mobile User Profile */}
+              <div className="mt-auto pt-6 border-t border-white/20 flex items-center gap-3">
+                <div className="size-10 rounded-full bg-[#D9D9D9] flex items-center justify-center text-slate-700 shadow-sm">
+                  <HugeiconsIcon icon={UserIcon} className="size-6" strokeWidth={2} />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium text-white">Miguel dos Santos</span>
+                  <span className="text-xs text-white/70">miguel@weg.net</span>
+                </div>
               </div>
             </SheetContent>
           </Sheet>
