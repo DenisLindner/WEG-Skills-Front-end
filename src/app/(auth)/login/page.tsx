@@ -4,6 +4,7 @@ import { Label } from "@/components/atoms/label";
 import { Button } from "@/components/atoms/button";
 
 import Image from "next/image";
+import Link from "next/link";
 
 export default function LoginPage() {
     return (
@@ -85,7 +86,15 @@ export default function LoginPage() {
                             </div>
                         </div>
 
-                        <Label className="text-base justify-center text-[#005294] hover:underline cursor-pointer">Esqueceu a senha?</Label>
+                        <div className="flex flex-col items-center gap-3">
+                            <Label className="text-base justify-center text-[#005294] hover:underline cursor-pointer">Esqueceu a senha?</Label>
+                            <p className="text-base text-slate-600 text-center">
+                                Não tem uma conta?{" "}
+                                <Link href="/register" className="font-semibold text-[#005294] hover:underline">
+                                    Registre-se
+                                </Link>
+                            </p>
+                        </div>
 
                     </CardContent>
                 </Card>
