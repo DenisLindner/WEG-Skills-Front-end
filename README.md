@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+### 🔑 Autenticação & Página Inicial
+- [http://localhost:3000/](http://localhost:3000/) — Página Inicial / Home
+- [http://localhost:3000/login](http://localhost:3000/login) — Tela de Login
+- [http://localhost:3000/register](http://localhost:3000/register) — Tela de Cadastro de Usuário
 
-## Getting Started
+---
 
-First, run the development server:
+### 📚 Cursos & Detalhes
+- [http://localhost:3000/courses](http://localhost:3000/courses) — Lista de Cursos
+- [http://localhost:3000/courses/course_details](http://localhost:3000/courses/course_details) — *(Nova)* Detalhes do Curso
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🎓 Área do Aluno (`/student`)
+- [http://localhost:3000/student](http://localhost:3000/student) — Dashboard do Aluno
+- [http://localhost:3000/student/course](http://localhost:3000/student/course) — Visão do Curso do Aluno
+- [http://localhost:3000/student/course/module](http://localhost:3000/student/course/module) — Módulo/Aula do Curso
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 👨‍🏫 Área do Instrutor (`/instructor`)
+- [http://localhost:3000/instructor](http://localhost:3000/instructor) — Painel do Instrutor
+- [http://localhost:3000/instructor/registerCourse](http://localhost:3000/instructor/registerCourse) — Cadastro de Novo Curso
+- [http://localhost:3000/instructor/registerModule](http://localhost:3000/instructor/registerModule) — Cadastro de Novo Módulo
+- [http://localhost:3000/instructor/registerLessons](http://localhost:3000/instructor/registerLessons) — Cadastro de Novas Aulas
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+### 🛡️ Área Administrativa (`/admin`)
+- [http://localhost:3000/admin](http://localhost:3000/admin) — Painel de Administração
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 📜 Certificados & Outras Páginas
+- [http://localhost:3000/about](http://localhost:3000/about) — Sobre o Projeto / Institucional
+- [http://localhost:3000/profile](http://localhost:3000/profile) — Perfil do Usuário
+- [http://localhost:3000/certificate](http://localhost:3000/certificate) — Visualização de Certificado
+- [http://localhost:3000/issue_certificate](http://localhost:3000/issue_certificate) — Emissão de Certificados
+- [http://localhost:3000/teste](http://localhost:3000/teste) — Página de Testes
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
