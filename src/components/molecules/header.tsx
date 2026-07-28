@@ -14,6 +14,7 @@ import {
 } from "@/components/atoms/sheet"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { Menu01Icon } from "@hugeicons/core-free-icons"
+import { NotificationsDrawer } from "@/components/organisms/notifications-drawer"
 import HeaderLogged from "./header-logged"
 
 interface HeaderProps {
@@ -57,7 +58,7 @@ export default function Header({ isLoggedIn = false }: HeaderProps = {}) {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-6 md:flex">
           <Link
             href="#certificado"
             className="relative py-0.5 text-sm font-medium text-white after:content-[''] after:absolute after:left-0 after:bottom-[1px] after:h-px after:w-full after:bg-white after:scale-x-0 after:origin-left after:transition-transform after:duration-500 after:ease-out hover:after:scale-x-100"
@@ -70,17 +71,23 @@ export default function Header({ isLoggedIn = false }: HeaderProps = {}) {
           >
             Sobre
           </Link>
+
+          {/* Notificações no Header deslogado */}
+          <NotificationsDrawer isLoggedIn={false} />
+
           <Button
             nativeButton={false}
-            render={<Link href="#login" />}
+            render={<Link href="/login" />}
             className="bg-white text-[#00579D] border-2 border-white font-medium px-4 py-1.5 h-auto text-sm rounded-lg transition-colors hover:bg-[#005294] hover:text-white bg-clip-border"
           >
             Login
           </Button>
         </nav>
 
-        {/* Mobile Hamburger Menu */}
-        <div className="md:hidden">
+        {/* Mobile Navigation */}
+        <div className="flex items-center gap-2 md:hidden">
+          <NotificationsDrawer isLoggedIn={false} />
+
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger
               className="p-2 text-white hover:bg-white/10 rounded-md transition-colors inline-flex items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-white/50 cursor-pointer"

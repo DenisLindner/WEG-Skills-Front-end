@@ -1,7 +1,8 @@
-### 🔑 Autenticação & Página Inicial
+### 🔑 Autenticação & Conta
 - [http://localhost:3000/](http://localhost:3000/) — Página Inicial / Home
 - [http://localhost:3000/login](http://localhost:3000/login) — Tela de Login
 - [http://localhost:3000/register](http://localhost:3000/register) — Tela de Cadastro de Usuário
+- [http://localhost:3000/recovery_password](http://localhost:3000/recovery_password) — Tela de Recuperação de Senha
 
 ---
 
