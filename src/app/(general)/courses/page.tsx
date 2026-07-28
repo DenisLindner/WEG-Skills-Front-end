@@ -8,6 +8,7 @@ import {
   ArrowRight01Icon,
 } from "@hugeicons/core-free-icons";
 import { CourseCard } from "@/components/molecules/course-card";
+import Hero from "@/components/organisms/hero";
 
 export default function CoursesPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -60,8 +61,9 @@ export default function CoursesPage() {
   );
 
   return (
-    <main className="flex-1 flex flex-col w-full bg-[#003057] min-h-[calc(100vh-64px)] py-12 sm:py-16 px-4 sm:px-6 lg:px-8 text-white">
-      <div className="max-w-6xl mx-auto w-full flex-1 flex flex-col justify-between">
+    <main className="flex-1 flex flex-col w-full bg-[#003057] min-h-[calc(100vh-64px)] pb-12 sm:pb-16 text-white">
+      <Hero page="courses" />
+      <div className="max-w-6xl mx-auto w-full flex-1 flex flex-col justify-between px-4 sm:px-6 lg:px-8 pt-8">
         
         {/* Topo da Seção: Título e Sublinha */}
         <div className="flex flex-col items-center mb-10 sm:mb-12">
