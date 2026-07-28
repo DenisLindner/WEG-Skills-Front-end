@@ -61,9 +61,10 @@ export default function CoursesPage() {
   );
 
   return (
-    <main className="flex-1 flex flex-col w-full bg-[#003057] min-h-[calc(100vh-64px)] pb-12 sm:pb-16 text-white">
+    <main className="flex-1 flex flex-col w-full bg-[#003057] text-white">
       <Hero page="courses" />
-      <div className="max-w-6xl mx-auto w-full flex-1 flex flex-col justify-between px-4 sm:px-6 lg:px-8 pt-8">
+      <div className="py-10 sm:py-14 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto w-full flex flex-col items-center gap-8 sm:gap-10">
         
         {/* Topo da Seção: Título e Sublinha */}
         <div className="flex flex-col items-center">
@@ -208,6 +209,7 @@ export default function CoursesPage() {
         </div>
 
       </div>
-    </main>
-  );
+    </div>
+  </main>
+);
 }
