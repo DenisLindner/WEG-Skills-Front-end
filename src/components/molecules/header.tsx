@@ -78,7 +78,7 @@ export default function Header({ isLoggedIn = false }: HeaderProps = {}) {
           <Button
             nativeButton={false}
             render={<Link href="/login" />}
-            className="bg-white text-[#00579D] border-2 border-white font-medium px-4 py-1.5 h-auto text-sm rounded-lg transition-colors hover:bg-[#005294] hover:text-white bg-clip-border"
+            className="bg-white text-[#00579D] border-2 border-white font-medium px-4 py-1.5 h-auto text-sm rounded-lg transition-colors hover:bg-[#ffffff00] hover:text-white bg-clip-border"
           >
             Login
           </Button>

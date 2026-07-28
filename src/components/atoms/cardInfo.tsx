@@ -1,13 +1,17 @@
 import { LucideIcon } from "lucide-react"
 
-export default function InfoCard({ Card }: { Card: { icon: LucideIcon; titulo: string; subtitulo: string; dados: string; alt?: string } }) {
+export default function InfoCard({ Card }: { Card: { icon: LucideIcon | string; titulo: string; subtitulo: string; dados: string; alt?: string } }) {
     const Icon = Card.icon
     return (
-        <div className="bg-[#f0f0f0] shadow-[-8px_8px_0px_#00579D] w-[210px] sm:w-[225px] h-[250px] sm:h-[270px] my-3 rounded-[6px] shrink-0 transition-transform hover:-translate-y-1">
-            <div className="h-full flex justify-between items-center flex-col py-5 px-3">
-                <div className="flex justify-center items-center flex-col gap-1.5 my-auto">
-                    <div className="rounded-full size-14 sm:size-16 bg-[#00579D] flex justify-center items-center mb-2 shadow-sm">
-                        <Icon className="size-7 sm:size-8 text-white" />
+        <div className="bg-[#f0f0f0] shadow-[-10px_10px_0px_#00579D] w-[225px] h-[275px] ml-3 mb-6 rounded-[6px] shrink-0">
+            <div className="h-[100%] flex justify-between items-center flex-col pb-[35px]">
+                <div className="h-[100%] flex justify-end items-center flex-col pb-[15px] ">
+                    <div className="rounded-[100px] w-[70px] h-[70px] bg-[#00579D] flex justify-center items-center mb-[15px]">
+                        {typeof Icon === "string" ? (
+                            <img src={Icon} alt={Card.alt || Card.titulo} className="w-10 h-10 filter invert brightness-200" />
+                        ) : (
+                            <Icon className="w-10 h-10 text-white" />
+                        )}
                     </div>
                     <h3 className="text-slate-500 text-sm sm:text-base font-medium text-center leading-tight">{Card.titulo}</h3>
                     <h3 className="text-slate-500 text-sm sm:text-base font-medium text-center leading-tight">{Card.subtitulo}</h3>
