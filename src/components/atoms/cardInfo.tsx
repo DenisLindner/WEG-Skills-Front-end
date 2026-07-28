@@ -13,10 +13,10 @@ export default function InfoCard({ Card }: { Card: { icon: LucideIcon | string; 
                             <Icon className="w-10 h-10 text-white" />
                         )}
                     </div>
-                    <h3 className="text-[#808080] text-[20px] text-center ">{Card.titulo}</h3>
-                    <h3 className="text-[#808080] text-[20px] text-center ">{Card.subtitulo}</h3>
+                    <h3 className="text-slate-500 text-sm sm:text-base font-medium text-center leading-tight">{Card.titulo}</h3>
+                    <h3 className="text-slate-500 text-sm sm:text-base font-medium text-center leading-tight">{Card.subtitulo}</h3>
                 </div>
-                <p className="text-[30px] text-[#00579D] font-bold">{Card.dados}</p>
+                <p className="text-2xl sm:text-3xl text-[#00579D] font-bold mt-auto">{Card.dados}</p>
             </div>
         </div>
     )

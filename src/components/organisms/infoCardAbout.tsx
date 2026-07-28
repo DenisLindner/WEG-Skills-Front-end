@@ -2,7 +2,7 @@ import { Card, CardContent } from "../atoms/card"
 import Image from "next/image"
 export default function infoCardAbout() {
     return (
-        <section className="pt-[5rem] pb-[5rem] flex flex-col items-center justify-center w-[100%] gap-[50px] bg-[#00335C] ">
+        <section className="pt-[5rem] pb-[5rem] flex flex-col items-center justify-center w-[100%]  gap-[50px] bg-[#00335C] ">
             <div className="hidden min-[768px]:flex flex-row gap-[50px] items-center">
                 <Card className="w-[27rem] h-[20rem] shadow-[-8px_0px_15px_#00000050]">
                     <CardContent>

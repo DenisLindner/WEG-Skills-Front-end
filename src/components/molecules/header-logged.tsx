@@ -12,12 +12,13 @@ import {
 } from "@/components/atoms/sheet"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { Menu01Icon, UserIcon } from "@hugeicons/core-free-icons"
+import { NotificationsDrawer } from "@/components/organisms/notifications-drawer"
 
 export default function HeaderLogged() {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="w-full bg-[#00579D] text-white shadow-md">
+    <header className="sticky top-0 z-50 w-full bg-[#00579D] text-white shadow-md">
       <div className="mx-auto flex h-16 max-w-[90%] items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
@@ -32,7 +33,7 @@ export default function HeaderLogged() {
         </Link>
 
         {/* Desktop Navigation & User Profile */}
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden items-center gap-6 md:flex">
           <nav className="flex items-center gap-8">
             <Link
               href="#certificado"
@@ -48,14 +49,19 @@ export default function HeaderLogged() {
             </Link>
           </nav>
 
+          {/* Notificações no Header Logado */}
+          <NotificationsDrawer isLoggedIn={true} />
+
           {/* Avatar / Profile Icon */}
           <div className="size-9 rounded-full bg-[#D9D9D9] border border-white/20 flex items-center justify-center text-slate-700 cursor-pointer hover:opacity-90 transition-opacity shadow-sm" title="Miguel dos Santos">
             <HugeiconsIcon icon={UserIcon} className="size-5" strokeWidth={2} />
           </div>
         </div>
 
-        {/* Mobile Hamburger Menu */}
-        <div className="md:hidden">
+        {/* Mobile Hamburger Menu & Notifications */}
+        <div className="flex items-center gap-2 md:hidden">
+          <NotificationsDrawer isLoggedIn={true} />
+
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger
               className="p-2 text-white hover:bg-white/10 rounded-md transition-colors inline-flex items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-white/50 cursor-pointer"

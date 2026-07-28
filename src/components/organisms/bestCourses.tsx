@@ -21,7 +21,7 @@ export default function bestCourse() {
         /* https://unsplash.com/pt-br/fotografias/tela-de-computador-exibindo-linhas-de-codigo-Pu27coP2jPk */
         ImageLink: "/assets/images/eletric-tools.jpg",
         title: "Ferramentaria para Sistemas Elétricos",
-        description: "Como fazer ferramentas para os eletricista",
+        description: "Como fazer ferramentas para os eletricistas",
         rate: 9
     }
 
@@ -30,11 +30,11 @@ export default function bestCourse() {
         /* https://unsplash.com/pt-br/fotografias/uma-grande-variedade-de-antenas-parabolicas-sentados-em-cima-de-uma-estrada-de-terra--34L9zLtCcM */
         ImageLink: "/assets/images/astronomical-tools.jpg",
         title: "Ferramentaria para Sistemas Astronômicos",
-        description: "Como fazer ferramentas para os Astronômos",
+        description: "Como fazer ferramentas para os Astrônomos",
         rate: 6.7
     }
 
-    let cards = [card1, card2, card3]
+    const cards = [card1, card2, card3]
 
     const toggleCategoria = (categoria: string) => {
         setCategoriaAtiva(prev => prev === categoria ? null : categoria);
@@ -45,8 +45,9 @@ export default function bestCourse() {
             <div className="flex w-[100vw] justify-center items-center flex-col">
                 <h2 className="text-white text-[32px] font-bold  my-[30px]">Cursos melhor avaliados</h2>
             </div>
-            <div className="flex justify-center w-[90%]">
-                <Separator className={"w-[90vw] h-[4px] bg-white"} />
+
+            <div className="flex justify-center w-full max-w-5xl px-6 my-2">
+                <Separator className="w-full h-[2px] sm:h-[4px] bg-white/40" />
             </div>
             <div className="flex  flex-col justify-center items-center mt-[7vh] mb-[7vh] gap-[20px]  min-[1100px]:gap-[100px] min-[900px]:flex-wrap min-[900]:flex-row min-[850px]:w-[75vw]  ">
                 {

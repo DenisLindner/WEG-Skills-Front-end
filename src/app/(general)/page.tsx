@@ -1,6 +1,5 @@
 "use client"
 
-import CourseCard from "@/components/molecules/course-card"
 import InfoCarousel from "@/components/molecules/InfoCarousel"
 import BestCourses from "@/components/organisms/bestCourses"
 import Hero from "@/components/organisms/hero"
