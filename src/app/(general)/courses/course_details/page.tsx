@@ -118,8 +118,8 @@ export default function CourseDetailsPage() {
                   </p>
                 </div>
 
-                {/* Rodapé da Avaliação (Estrelas e Data) */}
-                <div className="flex items-center justify-between pt-2 border-t border-slate-200/60">
+                {/* Rodapé da Avaliação (Empilhado em telas médias, lado a lado em telas grandes) */}
+                <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-1.5 xl:gap-2 pt-3 border-t border-slate-200/60">
                   <Rating rate={review.rate} />
                   <span className="text-[11px] sm:text-xs text-slate-400 font-medium">
                     {review.date}
