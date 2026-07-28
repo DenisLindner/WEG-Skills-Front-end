@@ -60,11 +60,11 @@ export default function CoursesPage() {
   );
 
   return (
-    <main className="flex-1 flex flex-col w-full bg-[#003057] min-h-[calc(100vh-64px)] py-12 sm:py-16 px-4 sm:px-6 lg:px-8 text-white">
-      <div className="max-w-6xl mx-auto w-full flex-1 flex flex-col justify-between">
+    <main className="flex-1 flex flex-col w-full bg-[#003057] py-10 sm:py-14 px-4 sm:px-6 lg:px-8 text-white">
+      <div className="max-w-6xl mx-auto w-full flex flex-col items-center gap-8 sm:gap-10">
         
         {/* Topo da Seção: Título e Sublinha */}
-        <div className="flex flex-col items-center mb-10 sm:mb-12">
+        <div className="flex flex-col items-center">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center tracking-tight">
             Cursos Disponíveis
           </h1>
@@ -72,7 +72,7 @@ export default function CoursesPage() {
         </div>
 
         {/* Barra de Busca Interativa */}
-        <div className="max-w-xl w-full mx-auto mb-12 sm:mb-16">
+        <div className="max-w-xl w-full mx-auto">
           <div className="bg-white rounded-full p-1.5 pl-5 shadow-lg flex items-center justify-between border border-white/20 transition-all focus-within:ring-2 focus-within:ring-white/40">
             <div className="flex items-center gap-3 flex-1 min-w-0">
               <HugeiconsIcon icon={Search01Icon} className="size-5 text-slate-400 shrink-0" strokeWidth={2} />
@@ -94,9 +94,9 @@ export default function CoursesPage() {
         </div>
 
         {/* Grid de Cards de Curso (3 colunas no Desktop) */}
-        <div className="flex-1 mb-12 sm:mb-16">
+        <div className="w-full">
           {filteredCourses.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-start">
               {filteredCourses.map((course) => (
                 <CourseCard
                   key={course.id}
@@ -123,22 +123,22 @@ export default function CoursesPage() {
           )}
         </div>
 
-        {/* Paginação Exata conforme o Mockup */}
-        <div className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm font-medium text-white/80 select-none mt-auto pt-4">
+        {/* Paginação Responsiva */}
+        <div className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm font-medium text-white/80 select-none pt-2 max-w-full">
           <button
             type="button"
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded hover:text-white hover:bg-white/10 transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+            className="flex items-center gap-1 px-2 py-1.5 sm:px-2.5 rounded hover:text-white hover:bg-white/10 transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent shrink-0"
           >
-            <HugeiconsIcon icon={ArrowLeft01Icon} className="size-3.5 sm:size-4" strokeWidth={2} />
-            <span>Anterior</span>
+            <HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" strokeWidth={2} />
+            <span className="hidden min-[380px]:inline">Anterior</span>
           </button>
 
           <button
             type="button"
             onClick={() => setCurrentPage(1)}
-            className={`px-3 py-1.5 rounded transition-all cursor-pointer ${
+            className={`px-2.5 sm:px-3 py-1.5 rounded transition-all cursor-pointer ${
               currentPage === 1
                 ? "bg-white text-[#003057] font-bold shadow-md scale-105"
                 : "hover:text-white hover:bg-white/10"
@@ -149,7 +149,7 @@ export default function CoursesPage() {
           <button
             type="button"
             onClick={() => setCurrentPage(2)}
-            className={`px-3 py-1.5 rounded transition-all cursor-pointer ${
+            className={`px-2.5 sm:px-3 py-1.5 rounded transition-all cursor-pointer ${
               currentPage === 2
                 ? "bg-white text-[#003057] font-bold shadow-md scale-105"
                 : "hover:text-white hover:bg-white/10"
@@ -160,7 +160,7 @@ export default function CoursesPage() {
           <button
             type="button"
             onClick={() => setCurrentPage(3)}
-            className={`px-3 py-1.5 rounded transition-all cursor-pointer ${
+            className={`hidden min-[480px]:inline-flex px-2.5 sm:px-3 py-1.5 rounded transition-all cursor-pointer ${
               currentPage === 3
                 ? "bg-white text-[#003057] font-bold shadow-md scale-105"
                 : "hover:text-white hover:bg-white/10"
@@ -169,12 +169,12 @@ export default function CoursesPage() {
             3
           </button>
 
-          <span className="px-1 text-white/50 tracking-widest font-bold">...</span>
+          <span className="px-0.5 sm:px-1 text-white/50 tracking-widest font-bold">...</span>
 
           <button
             type="button"
             onClick={() => setCurrentPage(11)}
-            className={`px-3 py-1.5 rounded transition-all cursor-pointer ${
+            className={`hidden min-[480px]:inline-flex px-2.5 sm:px-3 py-1.5 rounded transition-all cursor-pointer ${
               currentPage === 11
                 ? "bg-white text-[#003057] font-bold shadow-md scale-105"
                 : "hover:text-white hover:bg-white/10"
@@ -185,7 +185,7 @@ export default function CoursesPage() {
           <button
             type="button"
             onClick={() => setCurrentPage(12)}
-            className={`px-3 py-1.5 rounded transition-all cursor-pointer ${
+            className={`px-2.5 sm:px-3 py-1.5 rounded transition-all cursor-pointer ${
               currentPage === 12
                 ? "bg-white text-[#003057] font-bold shadow-md scale-105"
                 : "hover:text-white hover:bg-white/10"
@@ -198,10 +198,10 @@ export default function CoursesPage() {
             type="button"
             onClick={() => setCurrentPage((p) => Math.min(12, p + 1))}
             disabled={currentPage === 12}
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded hover:text-white hover:bg-white/10 transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+            className="flex items-center gap-1 px-2 py-1.5 sm:px-2.5 rounded hover:text-white hover:bg-white/10 transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent shrink-0"
           >
-            <span>Próximo</span>
-            <HugeiconsIcon icon={ArrowRight01Icon} className="size-3.5 sm:size-4" strokeWidth={2} />
+            <span className="hidden min-[380px]:inline">Próximo</span>
+            <HugeiconsIcon icon={ArrowRight01Icon} className="size-4" strokeWidth={2} />
           </button>
         </div>
 

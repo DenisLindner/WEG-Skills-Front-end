@@ -62,26 +62,26 @@ export default function InfoCarousel() {
   ]
 
   return (
-    <section className="w-full max-w-full overflow-hidden py-6 flex flex-col items-center">
-      <div className="w-full text-center mb-6 px-4">
-        <h2 className="text-2xl sm:text-4xl md:text-[50px] text-[#00579D] font-bold leading-tight">
-          Informação sobre a WEG Skills
+    <section className="w-full max-w-full py-4 sm:py-6 flex flex-col items-center overflow-x-hidden">
+      <div className="w-full text-center mb-4 sm:mb-6 px-4">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[45px] text-[#00579D] font-bold leading-tight">
+          Informações sobre a WEG Skills
         </h2>
       </div>
-      <div className="w-full max-w-6xl px-4 overflow-hidden flex justify-center items-center">
+      <div className="w-full max-w-6xl px-4 sm:px-6 flex justify-center items-center">
         <Carousel
           opts={{
-            align: "start",
+            align: "center",
             loop: true,
           }}
           className="w-full"
           plugins={[plugin.current]}
         >
-          <CarouselContent className="-ml-2 md:-ml-4">
+          <CarouselContent className="-ml-2 md:-ml-4 py-2">
             {cards.map((card) => (
               <CarouselItem
                 key={card.id}
-                className="pl-2 md:pl-4 basis-full min-[540px]:basis-1/2 md:basis-1/3 lg:basis-1/4 flex justify-center items-center py-2"
+                className="pl-2 md:pl-4 basis-full min-[480px]:basis-1/2 md:basis-1/3 lg:basis-1/4 flex justify-center items-center py-2"
               >
                 <CardInfo Card={card} />
               </CarouselItem>

@@ -27,7 +27,7 @@ export function CourseCard({
   return (
     <div
       className={cn(
-        "w-full bg-white rounded-xl border border-slate-200/80 shadow-sm p-4 transition-all duration-200 hover:shadow-md",
+        "w-full h-fit self-start bg-white rounded-xl border border-slate-200/80 shadow-sm p-4 transition-all duration-200 hover:shadow-md",
         "md:max-w-[280px] md:flex md:flex-col md:justify-between md:gap-4",
         className
       )}
