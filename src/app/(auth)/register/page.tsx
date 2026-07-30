@@ -1,14 +1,65 @@
+"use client"
+
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/card";
 import { Input } from "@/components/atoms/input";
 import { Label } from "@/components/atoms/label";
 import { Button } from "@/components/atoms/button";
+import { Check, X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 import Image from "next/image";
+import Link from "next/link";
 
 export default function RegisterPage() {
+    const [email, setEmail] = useState("");
+    const [emailTouched, setEmailTouched] = useState(false);
+
+    const [password, setPassword] = useState("");
+    const [passwordTouched, setPasswordTouched] = useState(false);
+
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [confirmTouched, setConfirmTouched] = useState(false);
+
+    const validateEmail = (value: string) => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(value.trim());
+    };
+
+    const isEmailValid = validateEmail(email);
+    const showEmailSuccess = email.length > 0 && isEmailValid;
+    const showEmailError = emailTouched && email.length > 0 && !isEmailValid;
+
+    const isPasswordValid = password.length >= 6;
+    const showPasswordSuccess = password.length > 0 && isPasswordValid;
+    const showPasswordError = passwordTouched && password.length > 0 && !isPasswordValid;
+
+    const isConfirmValid = confirmPassword.length >= 6 && confirmPassword === password;
+    const showConfirmSuccess = confirmPassword.length > 0 && isConfirmValid;
+    const showConfirmError = confirmTouched && confirmPassword.length > 0 && !isConfirmValid;
+
+    const emailBorderClass = showEmailSuccess
+        ? "border-emerald-500 focus-visible:border-emerald-500"
+        : showEmailError
+        ? "border-red-500 focus-visible:border-red-500"
+        : "border-slate-200 focus-visible:border-[#005294]";
+
+    const passwordBorderClass = showPasswordSuccess
+        ? "border-emerald-500 focus-visible:border-emerald-500"
+        : showPasswordError
+        ? "border-red-500 focus-visible:border-red-500"
+        : "border-slate-200 focus-visible:border-[#005294]";
+
+    const confirmBorderClass = showConfirmSuccess
+        ? "border-emerald-500 focus-visible:border-emerald-500"
+        : showConfirmError
+        ? "border-red-500 focus-visible:border-red-500"
+        : "border-slate-200 focus-visible:border-[#005294]";
+
     return (
         <main className="flex flex-1 min-h-[calc(100vh-4rem)] w-full flex-col lg:flex-row">
-            <div className="hidden lg:flex relative lg:w-[55%] xl:w-[60%] bg-[url('/assets/images/fabric.png')] bg-cover bg-center items-center justify-center p-8">
+            <div className="hidden lg:flex relative lg:w-[55%] xl:w-[60%] overflow-hidden items-center justify-center p-8">
+                <div className="absolute inset-0 bg-[url('/assets/images/fabric_lp.png')] bg-cover bg-center filter blur-[3px] scale-105" />
                 <div className="absolute inset-0 bg-black/50" />
 
                 <div className="z-10 flex justify-center w-full px-4">
@@ -45,13 +96,32 @@ export default function RegisterPage() {
                     </CardHeader>
 
                     <CardContent className="flex flex-col gap-6 sm:gap-8">
+                        {/* Campo de Email */}
                         <div className="group relative flex flex-col pt-6 w-full sm:w-[85%] mx-auto">
-                            <Input
-                                id="email"
-                                type="email"
-                                placeholder="exemplo@gmail.com"
-                                className="bg-[#FFFFFF] peer rounded-none border-0 border-b-2 border-slate-200 px-2 py-2 text-base shadow-none focus-visible:border-[#005294] focus-visible:ring-0 placeholder:text-base"
-                            />
+                            <div className="relative w-full">
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    onBlur={() => setEmailTouched(true)}
+                                    placeholder="exemplo@gmail.com"
+                                    className={cn(
+                                        "bg-[#FFFFFF] peer rounded-none border-0 border-b-2 px-2 py-2 pr-8 text-base shadow-none focus-visible:ring-0 placeholder:text-base w-full transition-colors",
+                                        emailBorderClass
+                                    )}
+                                />
+                                {showEmailSuccess && (
+                                    <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none transition-all duration-200">
+                                        <Check className="w-4 h-4 text-emerald-500 stroke-[2.5]" />
+                                    </div>
+                                )}
+                                {showEmailError && (
+                                    <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none transition-all duration-200">
+                                        <X className="w-4 h-4 text-red-500 stroke-[2.5]" />
+                                    </div>
+                                )}
+                            </div>
 
                             <Label
                                 htmlFor="email"
@@ -61,12 +131,19 @@ export default function RegisterPage() {
                             </Label>
                         </div>
 
+                        {/* Campo de Senha */}
                         <div className="group relative flex flex-col pt-6 w-full sm:w-[85%] mx-auto">
                             <Input
                                 id="password"
                                 type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                onBlur={() => setPasswordTouched(true)}
                                 placeholder="************"
-                                className="bg-[#FFFFFF] peer rounded-none border-0 border-b-2 border-slate-200 px-2 py-2 text-base shadow-none focus-visible:border-[#005294] focus-visible:ring-0 placeholder:translate-y-1 placeholder:text-base"
+                                className={cn(
+                                    "bg-[#FFFFFF] peer rounded-none border-0 border-b-2 px-2 py-2 text-base shadow-none focus-visible:ring-0 placeholder:translate-y-1 placeholder:text-base w-full transition-colors",
+                                    passwordBorderClass
+                                )}
                             />
 
                             <Label
@@ -77,12 +154,19 @@ export default function RegisterPage() {
                             </Label>
                         </div>
 
+                        {/* Campo de Confirmar Senha */}
                         <div className="group relative flex flex-col pt-6 w-full sm:w-[85%] mx-auto">
                             <Input
                                 id="confirm-password"
                                 type="password"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                onBlur={() => setConfirmTouched(true)}
                                 placeholder="************"
-                                className="bg-[#FFFFFF] peer rounded-none border-0 border-b-2 border-slate-200 px-2 py-2 text-base shadow-none focus-visible:border-[#005294] focus-visible:ring-0 placeholder:translate-y-1 placeholder:text-base"
+                                className={cn(
+                                    "bg-[#FFFFFF] peer rounded-none border-0 border-b-2 px-2 py-2 text-base shadow-none focus-visible:ring-0 placeholder:translate-y-1 placeholder:text-base w-full transition-colors",
+                                    confirmBorderClass
+                                )}
                             />
 
                             <Label
@@ -100,9 +184,18 @@ export default function RegisterPage() {
                                 </Button>
                             </div>
                         </div>
+
+                        <div className="flex flex-col items-center gap-3">
+                            <p className="text-base text-slate-600 text-center">
+                                Já tem uma conta?{" "}
+                                <Link href="/login" className="font-semibold text-[#005294] hover:underline">
+                                    Faça login
+                                </Link>
+                            </p>
+                        </div>
                     </CardContent>
                 </Card>
             </div>
         </main>
-    )
+    );
 }
