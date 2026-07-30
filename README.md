@@ -1,41 +1,83 @@
-### 🔑 Autenticação & Conta
-- [http://localhost:3000/](http://localhost:3000/) — Página Inicial / Home
-- [http://localhost:3000/login](http://localhost:3000/login) — Tela de Login
-- [http://localhost:3000/register](http://localhost:3000/register) — Tela de Cadastro de Usuário
-- [http://localhost:3000/recovery_password](http://localhost:3000/recovery_password) — Tela de Recuperação de Senha
+# WEG Skills — Frontend
 
----
+Frontend da plataforma WEG Skills, construído com Next.js 16, React 19, TypeScript, Tailwind CSS 4, componentes no padrão Shadcn e ícones Lucide.
 
-### 📚 Cursos & Detalhes
-- [http://localhost:3000/courses](http://localhost:3000/courses) — Lista de Cursos
-- [http://localhost:3000/courses/course_details](http://localhost:3000/courses/course_details) — *(Nova)* Detalhes do Curso
+## Arquitetura
 
----
+O Next.js funciona como Backend for Frontend (BFF). O navegador nunca chama o Spring diretamente e nunca recebe o JWT.
 
-### 🎓 Área do Aluno (`/student`)
-- [http://localhost:3000/student](http://localhost:3000/student) — Dashboard do Aluno
-- [http://localhost:3000/student/course](http://localhost:3000/student/course) — Visão do Curso do Aluno
-- [http://localhost:3000/student/course/module](http://localhost:3000/student/course/module) — Módulo/Aula do Curso
+```text
+Browser ── /api/* ──> Next Route Handler ──> service server-only ── Bearer ──> Spring
+                            │
+                            └── cookie JWT HttpOnly
 
----
+Browser ── URL assinada temporária ──> MinIO (upload e reprodução)
+```
 
-### 👨‍🏫 Área do Instrutor (`/instructor`)
-- [http://localhost:3000/instructor](http://localhost:3000/instructor) — Painel do Instrutor
-- [http://localhost:3000/instructor/registerCourse](http://localhost:3000/instructor/registerCourse) — Cadastro de Novo Curso
-- [http://localhost:3000/instructor/registerModule](http://localhost:3000/instructor/registerModule) — Cadastro de Novo Módulo
-- [http://localhost:3000/instructor/registerLessons](http://localhost:3000/instructor/registerLessons) — Cadastro de Novas Aulas
+- Server Components chamam `src/services` diretamente.
+- Client Components chamam somente Route Handlers relativos em `src/app/api`.
+- `BACKEND_API_URL` existe somente no servidor.
+- O cookie usa `HttpOnly`, `SameSite=Lax`, `Path=/` e `Secure` em produção.
+- Mutações validam `Origin` e `Content-Type` antes de alcançar o backend.
+- Respostas do Spring são normalizadas para um erro público estável.
 
----
+## Configuração local
 
-### 🛡️ Área Administrativa (`/admin`)
-- [http://localhost:3000/admin](http://localhost:3000/admin) — Painel de Administração
+Crie `.env.local` a partir de `.env.example`:
 
----
+```dotenv
+BACKEND_API_URL=http://localhost:8080/api
+APP_URL=http://localhost:3000
+```
 
-### 📜 Certificados & Outras Páginas
-- [http://localhost:3000/about](http://localhost:3000/about) — Sobre o Projeto / Institucional
-- [http://localhost:3000/profile](http://localhost:3000/profile) — Perfil do Usuário
-- [http://localhost:3000/certificate](http://localhost:3000/certificate) — Visualização de Certificado
-- [http://localhost:3000/issue_certificate](http://localhost:3000/issue_certificate) — Emissão de Certificados
-- [http://localhost:3000/teste](http://localhost:3000/teste) — Página de Testes
+Não use o prefixo `NEXT_PUBLIC_` para a URL do Spring.
 
+```bash
+npm install
+npm run dev
+```
+
+O frontend estará disponível em `http://localhost:3000`. O backend e seus serviços PostgreSQL, Redis e MinIO devem estar ativos separadamente.
+
+## Experiências implementadas
+
+- Login, cadastro, logout e sessão por cookie HttpOnly.
+- Home pública, cursos em destaque e validação pública de certificados.
+- Catálogo autenticado, busca, paginação, detalhes, matrícula e avaliações.
+- Área do aluno com progresso, módulos, aulas, player, conclusão e certificado.
+- Perfil, avatar com upload direto, troca de senha e exclusão de conta.
+- Painel do instrutor e editor de cursos, módulos, aulas, imagens e vídeos.
+- Reordenação de conteúdo e publicação com as regras do backend.
+- Painel administrativo e criação segura de instrutores.
+- Estados responsivos, loading, página não encontrada e tratamento de erro.
+
+## Uploads
+
+1. O navegador solicita um ticket ao BFF.
+2. O BFF autoriza no Spring e devolve somente o ticket temporário.
+3. O arquivo é enviado diretamente ao MinIO.
+4. O navegador confirma o upload pelo BFF.
+
+Imagens aceitam JPEG, PNG e WebP até 5 MB. Vídeos aceitam MP4 até 2 GiB.
+
+## Verificação
+
+```bash
+npm run lint
+npm run typecheck
+npm test
+npm run build
+```
+
+Os testes atuais validam o contrato do cliente HTTP público, respostas vazias, normalização de erros e comportamento de sessão expirada.
+
+## Estrutura principal
+
+```text
+src/
+├── app/             páginas, layouts e Route Handlers do BFF
+├── components/      UI Shadcn e componentes por domínio
+├── lib/             sessão, segurança do BFF, uploads e cliente browser
+├── services/        acesso server-only aos recursos Spring
+└── types/           contratos compartilhados alinhados aos DTOs
+```
