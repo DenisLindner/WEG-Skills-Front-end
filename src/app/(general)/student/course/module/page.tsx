@@ -1,3 +1,2 @@
-export default function ModulePage() {
-  return <div />
-}
+import { redirect } from "next/navigation"
+export default function LegacyModulePage() { redirect("/student") }
