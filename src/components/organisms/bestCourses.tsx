@@ -41,15 +41,18 @@ export default function bestCourse() {
     };
 
     return (
-        <section className="bg-[#00335C] h-fit flex flex-col justify-center items-center">
-            <div className="flex w-[100vw] justify-center items-center flex-col">
-                <h2 className="text-white text-[32px] font-bold  my-[30px]">Cursos melhor avaliados</h2>
+        <section className="w-full bg-[#00335C] py-10 flex flex-col justify-center items-center overflow-hidden">
+            <div className="flex w-full justify-center items-center flex-col px-4">
+                <h2 className="text-white text-2xl sm:text-3xl md:text-[32px] font-bold my-4 text-center">
+                    Cursos melhor avaliados
+                </h2>
             </div>
 
             <div className="flex justify-center w-full max-w-5xl px-6 my-2">
                 <Separator className="w-full h-[2px] sm:h-[4px] bg-white/40" />
             </div>
-            <div className="flex  flex-col justify-center items-center mt-[7vh] mb-[7vh] gap-[20px]  min-[1100px]:gap-[100px] min-[900px]:flex-wrap min-[900]:flex-row min-[850px]:w-[75vw]  ">
+
+            <div className="flex flex-col md:flex-row flex-wrap justify-center items-center gap-6 lg:gap-12 w-full max-w-6xl px-4 sm:px-6 my-8">
                 {
                     cards.map((card) => (
                         <CourseCard
@@ -58,6 +61,7 @@ export default function bestCourse() {
                             title={card.title}
                             description={card.description}
                             rate={card.rate}
+                            className="w-full md:w-[280px]"
                         />
                     ))
                 }

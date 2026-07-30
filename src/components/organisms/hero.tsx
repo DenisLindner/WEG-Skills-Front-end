@@ -81,7 +81,7 @@ export default function Hero({
   className = "",
 }: HeroProps) {
   // Obtém configuração pré-definida da página (se existir)
-  const pageConfig = HERO_PAGES_CONFIG[page as string] || {}
+  const pageConfig = (HERO_PAGES_CONFIG[page as string] || {}) as Partial<HeroPageConfig>
 
   // Resolve os valores (props explícitas têm prioridade sobre o objeto de config)
   const finalTitle = title ?? pageConfig.title ?? "WEG Skills"
