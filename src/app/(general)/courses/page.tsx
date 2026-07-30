@@ -1,215 +1,23 @@
-"use client";
+import type { Metadata } from "next"
+import { Search } from "lucide-react"
+import { redirect } from "next/navigation"
+import { CourseCard } from "@/components/shared/course-card"
+import { PaginationLinks } from "@/components/shared/pagination-links"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { getSession } from "@/lib/session"
+import { courseService } from "@/services/course.service"
 
-import React, { useState } from "react";
-import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  Search01Icon,
-  ArrowLeft01Icon,
-  ArrowRight01Icon,
-} from "@hugeicons/core-free-icons";
-import { CourseCard } from "@/components/molecules/course-card";
-import Hero from "@/components/organisms/hero";
+export const metadata: Metadata = { title: "Cursos" }
 
-export default function CoursesPage() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+export default async function CoursesPage({ searchParams }: { searchParams: Promise<{ title?: string; page?: string }> }) {
+  const session = await getSession()
+  if (!session.authenticated) redirect("/login?next=/courses")
+  const query = await searchParams
+  const page = Math.max(0, Number(query.page) || 0)
+  const title = query.title?.trim()
+  const courses = await courseService.listPublished({ page, size: 12, title })
 
-  // Array de cursos baseado no mockup (3x2 no grid)
-  const allCourses = [
-    {
-      id: 1,
-      title: "Ferramentaria para Sistemas WEB",
-      description: "Uma breve descrição sobre o curso de ferramentaria e desenvolvimento de interfaces.",
-      rate: 10, // 1 estrela preenchida como na imagem
-    },
-    {
-      id: 2,
-      title: "Ferramentaria para Sistemas WEB",
-      description: "Uma breve descrição sobre o curso de ferramentaria e desenvolvimento de interfaces.",
-      rate: 10,
-    },
-    {
-      id: 3,
-      title: "Ferramentaria para Sistemas WEB",
-      description: "Uma breve descrição sobre o curso de ferramentaria e desenvolvimento de interfaces.",
-      rate: 9,
-    },
-    {
-      id: 4,
-      title: "Ferramentaria para Sistemas WEB",
-      description: "Uma breve descrição sobre o curso de ferramentaria e desenvolvimento de interfaces.",
-      rate: 8,
-    },
-    {
-      id: 5,
-      title: "Ferramentaria para Sistemas WEB",
-      description: "Uma breve descrição sobre o curso de ferramentaria e desenvolvimento de interfaces.",
-      rate: 9,
-    },
-    {
-      id: 6,
-      title: "Ferramentaria para Sistemas WEB",
-      description: "Uma breve descrição sobre o curso de ferramentaria e desenvolvimento de interfaces.",
-      rate: 10,
-    },
-  ];
-
-  // Filtro de busca interativa
-  const filteredCourses = allCourses.filter((course) =>
-    course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    course.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  return (
-    <main className="flex-1 flex flex-col w-full bg-[#003057] text-white">
-      <Hero page="courses" />
-      <div className="py-10 sm:py-14 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto w-full flex flex-col items-center gap-8 sm:gap-10">
-        
-        {/* Topo da Seção: Título e Sublinha */}
-        <div className="flex flex-col items-center">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center tracking-tight">
-            Cursos Disponíveis
-          </h1>
-          <div className="w-48 sm:w-64 h-1.5 bg-[#00579D] rounded-full mt-3 sm:mt-4" />
-        </div>
-
-        {/* Barra de Busca Interativa */}
-        <div className="max-w-xl w-full mx-auto">
-          <div className="bg-white rounded-full p-1.5 pl-5 shadow-lg flex items-center justify-between border border-white/20 transition-all focus-within:ring-2 focus-within:ring-white/40">
-            <div className="flex items-center gap-3 flex-1 min-w-0">
-              <HugeiconsIcon icon={Search01Icon} className="size-5 text-slate-400 shrink-0" strokeWidth={2} />
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Nome, Descrição..."
-                className="w-full bg-transparent text-slate-700 placeholder:text-slate-400 text-sm sm:text-base focus:outline-none pr-2 truncate font-medium"
-              />
-            </div>
-            <button
-              type="button"
-              className="bg-[#00579D] hover:bg-[#004780] active:scale-95 text-white font-medium px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base transition-all shadow-sm shrink-0 cursor-pointer"
-            >
-              Buscar
-            </button>
-          </div>
-        </div>
-
-        {/* Grid de Cards de Curso (3 colunas no Desktop) */}
-        <div className="w-full">
-          {filteredCourses.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-start">
-              {filteredCourses.map((course) => (
-                <CourseCard
-                  key={course.id}
-                  title={course.title}
-                  description={course.description}
-                  rate={course.rate}
-                  className="md:!max-w-none w-full shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-none bg-white text-slate-800"
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-16 bg-white/5 rounded-2xl border border-white/10 max-w-lg mx-auto p-8">
-              <p className="text-lg text-white/80 font-medium">
-                Nenhum curso encontrado para &ldquo;{searchTerm}&rdquo;.
-              </p>
-              <button
-                type="button"
-                onClick={() => setSearchTerm("")}
-                className="mt-4 text-sm underline text-white hover:text-white/80 cursor-pointer font-semibold"
-              >
-                Limpar busca
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* Paginação Responsiva */}
-        <div className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm font-medium text-white/80 select-none pt-2 max-w-full">
-          <button
-            type="button"
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            disabled={currentPage === 1}
-            className="flex items-center gap-1 px-2 py-1.5 sm:px-2.5 rounded hover:text-white hover:bg-white/10 transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent shrink-0"
-          >
-            <HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" strokeWidth={2} />
-            <span className="hidden min-[380px]:inline">Anterior</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setCurrentPage(1)}
-            className={`px-2.5 sm:px-3 py-1.5 rounded transition-all cursor-pointer ${
-              currentPage === 1
-                ? "bg-white text-[#003057] font-bold shadow-md scale-105"
-                : "hover:text-white hover:bg-white/10"
-            }`}
-          >
-            1
-          </button>
-          <button
-            type="button"
-            onClick={() => setCurrentPage(2)}
-            className={`px-2.5 sm:px-3 py-1.5 rounded transition-all cursor-pointer ${
-              currentPage === 2
-                ? "bg-white text-[#003057] font-bold shadow-md scale-105"
-                : "hover:text-white hover:bg-white/10"
-            }`}
-          >
-            2
-          </button>
-          <button
-            type="button"
-            onClick={() => setCurrentPage(3)}
-            className={`hidden min-[480px]:inline-flex px-2.5 sm:px-3 py-1.5 rounded transition-all cursor-pointer ${
-              currentPage === 3
-                ? "bg-white text-[#003057] font-bold shadow-md scale-105"
-                : "hover:text-white hover:bg-white/10"
-            }`}
-          >
-            3
-          </button>
-
-          <span className="px-0.5 sm:px-1 text-white/50 tracking-widest font-bold">...</span>
-
-          <button
-            type="button"
-            onClick={() => setCurrentPage(11)}
-            className={`hidden min-[480px]:inline-flex px-2.5 sm:px-3 py-1.5 rounded transition-all cursor-pointer ${
-              currentPage === 11
-                ? "bg-white text-[#003057] font-bold shadow-md scale-105"
-                : "hover:text-white hover:bg-white/10"
-            }`}
-          >
-            11
-          </button>
-          <button
-            type="button"
-            onClick={() => setCurrentPage(12)}
-            className={`px-2.5 sm:px-3 py-1.5 rounded transition-all cursor-pointer ${
-              currentPage === 12
-                ? "bg-white text-[#003057] font-bold shadow-md scale-105"
-                : "hover:text-white hover:bg-white/10"
-            }`}
-          >
-            12
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setCurrentPage((p) => Math.min(12, p + 1))}
-            disabled={currentPage === 12}
-            className="flex items-center gap-1 px-2 py-1.5 sm:px-2.5 rounded hover:text-white hover:bg-white/10 transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent shrink-0"
-          >
-            <span className="hidden min-[380px]:inline">Próximo</span>
-            <HugeiconsIcon icon={ArrowRight01Icon} className="size-4" strokeWidth={2} />
-          </button>
-        </div>
-
-      </div>
-    </div>
-  </main>
-);
+  return <main className="content-grid py-12 sm:py-16"><div className="mb-10 max-w-2xl"><p className="mb-2 text-sm font-bold uppercase tracking-[0.18em] text-primary">Catálogo</p><h1 className="text-4xl font-bold tracking-tight">Encontre seu próximo aprendizado</h1><p className="mt-3 text-muted-foreground">Explore os cursos publicados e avance nas competências que fazem diferença.</p></div><form className="mb-10 flex max-w-2xl gap-2" action="/courses"><div className="relative flex-1"><Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" /><Input name="title" defaultValue={title} placeholder="Buscar por título" className="pl-9" /></div><Button type="submit">Buscar</Button></form>{courses.content.length ? <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">{courses.content.map((course) => <CourseCard key={course.id} course={course} />)}</div> : <Card className="border-dashed p-12 text-center"><h2 className="font-semibold">Nenhum curso encontrado</h2><p className="mt-2 text-sm text-muted-foreground">Tente outro termo ou volte ao catálogo completo.</p></Card>}<PaginationLinks page={courses.number} totalPages={courses.totalPages} pathname="/courses" query={{ title }} /></main>
 }
