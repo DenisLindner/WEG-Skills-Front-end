@@ -1,3 +1,2 @@
-export default function RegisterModulePage() {
-  return <div />
-}
+import { redirect } from "next/navigation"
+export default function LegacyCreateModulePage() { redirect("/instructor") }

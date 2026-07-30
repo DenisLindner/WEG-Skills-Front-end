@@ -1,3 +1,2 @@
-export default function RegisterLessonsPage() {
-  return <div />
-}
+import { redirect } from "next/navigation"
+export default function LegacyCreateLessonPage() { redirect("/instructor") }

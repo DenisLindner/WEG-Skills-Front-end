@@ -1,5 +1,2 @@
-import CreateCourse from "@/components/organisms/createCourse"
-
-export default function RegisterCoursePage() {
-  return <CreateCourse />
-}
+import { redirect } from "next/navigation"
+export default function LegacyCreateCoursePage() { redirect("/instructor/courses/new") }
