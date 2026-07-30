@@ -1,31 +1,15 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "../globals.css";
-import Header from "@/components/molecules/header";
-import Footer from "@/components/molecules/footer";
+import { getSession } from "@/lib/session"
+import { userService } from "@/services/user.service"
+import type { UserProfile } from "@/types/domain"
+import { SiteFooter } from "@/components/shared/site-footer"
+import { SiteHeader } from "@/components/shared/site-header"
 
-const interSans = Inter({
-  variable: "--font-sans",
-  subsets: ["latin"],
-});
+export default async function GeneralLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const session = await getSession()
+  let user: UserProfile | null = null
+  if (session.authenticated) {
+    try { user = await userService.me() } catch { user = null }
+  }
 
-export const metadata: Metadata = {
-  title: "WEG Skills",
-  description: "Buildt by CentroWEG",
-};
-
-export default function RootLayout({children}: Readonly<{
-  children: React.ReactNode;
-}>) {
-
-  return (
-    <html lang="pt-BR" className={`${interSans.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">
-        <Header/>
-        {children}
-        <Footer />
-      </body>
-    </html>
-  );
-
+  return <div className="flex min-h-screen flex-col"><SiteHeader session={session} user={user} /><div className="flex flex-1 flex-col">{children}</div><SiteFooter /></div>
 }
