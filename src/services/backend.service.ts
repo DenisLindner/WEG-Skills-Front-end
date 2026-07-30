@@ -22,7 +22,7 @@ function getMediaUrl() {
     return url;
 }
 
-export async function backendFetch(path: string, options: BackendOptions = {}) {
+export async function backendFetch<T>(path: string, options: BackendOptions = {}): Promise<T> {
     const headers = new Headers(options.headers);
     const isFormData = options.body instanceof FormData;
 
@@ -53,7 +53,7 @@ export async function backendFetch(path: string, options: BackendOptions = {}) {
     }
 
     const body: unknown = await response.json();
-    return proxyMediaUrls(body, getMediaUrl());
+    return proxyMediaUrls(body, getMediaUrl()) as T;
 }
 
 export function toQuery(params: Record<string, string | number | undefined>) {
