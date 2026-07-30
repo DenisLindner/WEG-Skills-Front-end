@@ -1,0 +1,69 @@
+import {UserRole} from "@/types/user/user-role";
+import {cookies} from "next/headers";
+import {SessionResponse} from "@/types/auth/session";
+
+export const COOKIE_NAME = 'weg_skills_session';
+
+export const cookieOptions = {
+    httpOnly: true,
+    sameSite: 'lax' as const,
+    path: '/'
+};
+
+type JwtClaimOptions = {
+    sub?: unknown
+    exp?: unknown
+    userId?: unknown
+    roles?: unknown
+};
+
+function isRole(value: unknown) {
+    return value === UserRole.STUDENT || value === UserRole.INSTRUCTOR || value === UserRole.ADMIN;
+}
+
+function decodeClaimOptions(token: string) {
+    try {
+        const payload = token.split(".")[1];
+
+        if (!payload) {
+            return null;
+        }
+
+        return JSON.parse(Buffer.from(payload, 'base64url').toString('utf8')) as JwtClaimOptions;
+    } catch {
+        return null;
+    }
+}
+
+export async function getAccessToken() {
+    return (await cookies()).get(COOKIE_NAME)?.value ?? null;
+}
+
+export async function getSession(): Promise<SessionResponse> {
+    const token = await getAccessToken();
+    if (!token) {
+        return {authenticated: false};
+    }
+
+    const claims = decodeClaimOptions(token);
+    const userId = typeof claims?.userId === 'number' ? claims?.userId : '';
+    const email = typeof claims?.sub === 'string' ? claims?.sub : '';
+    const expiration = typeof claims?.exp === 'number' ? claims?.exp : '';
+    const roles = Array.isArray(claims?.roles) ? claims.roles.filter(isRole) : [];
+
+    if (!userId || !email || !expiration || expiration * 1000 <= Date.now()) {
+        return {authenticated: false}
+    }
+
+    return {
+        authenticated: true,
+        userId,
+        email,
+        roles,
+        expiresAt: new Date(expiration * 1000).toISOString()
+    };
+}
+
+export function hasRole(session: SessionResponse, ...roles: UserRole[]) {
+    return session.authenticated && roles.some((role) => session.roles.includes(role));
+}
