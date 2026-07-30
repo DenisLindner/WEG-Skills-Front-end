@@ -22,7 +22,7 @@ export const HERO_PAGES_CONFIG: Record<string, HeroPageConfig> = {
         <span className="font-bold">WEG</span> faz
       </>
     ),
-    imageSrc: "/assets/images/fabric.png",
+    imageSrc: "/assets/images/fabric_lp.png",
     hasButton: true,
     buttonText: "Cursos",
     buttonHref: "#cursos",
@@ -85,24 +85,26 @@ export default function Hero({
 
   // Resolve os valores (props explícitas têm prioridade sobre o objeto de config)
   const finalTitle = title ?? pageConfig.title ?? "WEG Skills"
-  const finalImageSrc = imageSrc ?? pageConfig.imageSrc ?? "/assets/images/fabric.png"
+  const finalImageSrc = imageSrc ?? pageConfig.imageSrc ?? "/assets/images/fabric_lp.png"
   const finalHasButton = hasButton ?? pageConfig.hasButton ?? false
   const finalButtonText = buttonText ?? pageConfig.buttonText ?? "Cursos"
   const finalButtonHref = buttonHref ?? pageConfig.buttonHref ?? "#"
 
   return (
     <section className={`relative w-full overflow-hidden bg-[#00335C] ${className}`}>
-      {/* Background Image com Blur e Overlay Gradiente Escuro */}
+      {/* Background Image de alta qualidade com Overlay Gradiente Escuro */}
       <div className="absolute inset-0 z-0">
         <Image
           src={finalImageSrc}
           alt="Hero Background"
           fill
           priority
-          className="object-cover object-center filter blur-[2px] scale-105"
+          quality={95}
+          sizes="100vw"
+          className="object-cover object-center filter blur-[3px] scale-105"
         />
         {/* Overlay escuro com sutil gradiente lateral para melhor contraste e profundidade */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/45 to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/45 to-black/30" />
       </div>
 
       {/* Conteúdo sobre a imagem - Deslocado mais para a direita conforme pedido */}
