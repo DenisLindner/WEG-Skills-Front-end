@@ -10,8 +10,8 @@ export default function Home() {
       <Hero page="home" />
       <div className="w-full max-w-[90%] mx-auto flex flex-col items-center gap-8 py-6">
         <InfoCarousel />
-        <BestCourses />
       </div>
+      <BestCourses />
     </main>
   )
 }
