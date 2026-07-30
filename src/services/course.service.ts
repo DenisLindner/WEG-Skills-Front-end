@@ -71,6 +71,6 @@ export const courseService = {
         return backendFetch<UploadTicket>(`/courses/${id}/images/upload`, {
             method: 'POST',
             body: JSON.stringify(input)
-        })
+        });
     }
 }
