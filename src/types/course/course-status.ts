@@ -1,4 +1,1 @@
-export enum CourseStatus {
-    DRAFT,
-    PUBLISHED
-}
+export type CourseStatus = 'DRAFT' | 'PUBLISHED';

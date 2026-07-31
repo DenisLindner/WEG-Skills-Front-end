@@ -1,8 +1,5 @@
-import {MediaStatus} from "@/types/media/media-status";
-import {MediaType} from "@/types/media/media-type";
-
 export type Media = {
     id: number
-    mediaStatus: MediaStatus
-    mediaType: MediaType
+    mediaStatus: "PENDING_UPLOAD" | "READY" | "DELETED"
+    mediaType: "COURSE_IMAGE" | "MODULE_IMAGE" | "LESSON_VIDEO" | "USER_IMAGE"
 }

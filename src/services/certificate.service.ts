@@ -3,7 +3,7 @@ import {Certificate} from "@/types/certificate/certificate";
 
 export const certificateService = {
     validate: (code: string) => {
-        return backendFetch<Certificate>(`/certificates/validate/${encodeURIComponent(code)}`, {
+        return backendFetch<Certificate>(`certificates/validate/${encodeURIComponent(code)}`, {
             auth: false
         });
     }

@@ -3,9 +3,11 @@ import {cookies} from "next/headers";
 import {SessionResponse} from "@/types/auth/session";
 
 export const COOKIE_NAME = 'weg_skills_session';
+const production = process.env.NODE_ENV === "production"
 
 export const cookieOptions = {
     httpOnly: true,
+    secure: production,
     sameSite: 'lax' as const,
     path: '/'
 };
@@ -17,8 +19,8 @@ type JwtClaimOptions = {
     roles?: unknown
 };
 
-function isRole(value: unknown) {
-    return value === UserRole.STUDENT || value === UserRole.INSTRUCTOR || value === UserRole.ADMIN;
+function isRole(value: unknown): value is UserRole {
+    return value === 'STUDENT' || value === 'INSTRUCTOR' || value === 'ADMIN';
 }
 
 function decodeClaimOptions(token: string) {
