@@ -3,6 +3,30 @@ import {cookies} from "next/headers";
 import {COOKIE_NAME} from "@/lib/session";
 import {NextResponse} from "next/server";
 
+type ApiResponseOptions = {
+    status?: number
+}
+
+export async function apiResponse<T>(
+    action: () => Promise<T>,
+    options: ApiResponseOptions = {},
+) {
+    try {
+        const value = await action()
+        if (value === undefined) {
+            return new Response(null, {
+                status: options.status ?? 204,
+                headers: { "Cache-Control": "no-store" },
+            })
+        }
+        const response = NextResponse.json(value, { status: options.status ?? 200 })
+        response.headers.set("Cache-Control", "no-store")
+        return response
+    } catch (error) {
+        return apiErrorResponse(error)
+    }
+}
+
 export async function apiErrorResponse(error: unknown) {
     if (error instanceof ApiError) {
         if (error.status === 401) {
