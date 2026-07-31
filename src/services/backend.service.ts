@@ -49,7 +49,7 @@ export async function backendFetch<T>(path: string, options: BackendOptions = {}
     }
 
     if (response.status === 204) {
-        return undefined;
+        return undefined as T;
     }
 
     const body: unknown = await response.json();
