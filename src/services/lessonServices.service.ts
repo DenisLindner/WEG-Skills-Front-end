@@ -6,9 +6,8 @@ import type { Lesson } from "@/types/lesson/lesson";
 import type { LessonCompletion } from "@/types/lesson/lesson-completion";
 import type { LessonDetails } from "@/types/lesson/lesson-details";
 import type { LessonInput } from "@/types/lesson/lesson-input";
-import type { MediaUploadInput } from "@/types/media/mediaUploadInput";
-import type { RepositionInput } from "@/types/common/repositionInput";
-import type { UploadTicket } from "@/types/media/UploadTicket";
+import type { RepositionInput } from "@/types/common/reposition-input";
+
 
 import { backendFetch } from "./backend.service";
 import { toQuery } from "./backend.service";
