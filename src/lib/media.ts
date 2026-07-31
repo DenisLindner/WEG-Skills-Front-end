@@ -1,37 +1,27 @@
-export const mediaProxyPrefix = '/_media';
+export function proxyMediaUrls<T>(data: T, mediaBaseUrl: string): T {
+  if (data === null || data === undefined) {
+    return data
+  }
 
-export function proxyMediaUrl(value: string, sourceUrl: string) {
-    try {
-        const url = new URL(value);
-        const source = new URL(sourceUrl);
-
-        if (url.origin !== source.origin) {
-            return value;
-        }
-
-        return `${mediaProxyPrefix}${url.pathname}${url.search}${url.hash}`;
-    } catch {
-        return value;
+  if (typeof data === "string") {
+    if (data.startsWith("/medias/") || data.startsWith("/media/")) {
+      const baseUrl = mediaBaseUrl.replace(/\/$/, "")
+      return `${baseUrl}${data}` as unknown as T
     }
-}
+    return data
+  }
 
-export function proxyMediaUrls(value: unknown, sourceUrl: string): unknown {
-    if (typeof value === "string") {
-        return proxyMediaUrl(value, sourceUrl);
+  if (Array.isArray(data)) {
+    return data.map((item) => proxyMediaUrls(item, mediaBaseUrl)) as unknown as T
+  }
+
+  if (typeof data === "object") {
+    const result: Record<string, unknown> = {}
+    for (const [key, value] of Object.entries(data as Record<string, unknown>)) {
+      result[key] = proxyMediaUrls(value, mediaBaseUrl)
     }
+    return result as T
+  }
 
-    if (Array.isArray(value)) {
-        return value.map((item) => proxyMediaUrls(item, sourceUrl));
-    }
-
-    if (value && typeof value === "object") {
-        return Object.fromEntries(
-            Object.entries(value).map(([key, item]) => [
-                key,
-                proxyMediaUrls(item, sourceUrl),
-            ]),
-        );
-    }
-
-    return value;
+  return data
 }
