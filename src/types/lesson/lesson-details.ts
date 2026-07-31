@@ -1,5 +1,3 @@
-import { Lesson } from "./lesson";
-
 export type LessonDetails = {
   id: number
   title: string
