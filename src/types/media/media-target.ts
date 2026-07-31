@@ -1,0 +1,1 @@
+export type MediaTarget = "course" | "module" | "lesson" | "me";
