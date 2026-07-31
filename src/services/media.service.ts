@@ -1,6 +1,6 @@
 import "server-only";
 
-import type {Media} from "@/types/domain";
+import type {Media} from "@/types/media/media";
 import {backendFetch} from "./backend.service";
 
 export type MediaTarget = "course" | "module" | "lesson" | "me";
