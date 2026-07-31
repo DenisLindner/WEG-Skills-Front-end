@@ -9,33 +9,33 @@ import {UploadTicket} from "@/types/media/upload-ticket";
 
 export const userService = {
     meProfile: () => {
-        return backendFetch<UserProfile>('/users/me');
+        return backendFetch<UserProfile>('users/me');
     },
     updateProfile: (input: UserProfileInput) => {
-        return backendFetch<UserProfile>('/users/me', {
+        return backendFetch<UserProfile>('users/me', {
             method: 'PATCH',
             body: JSON.stringify(input)
         })
     },
     changePassword: (input: PasswordChangeInput) => {
-        return backendFetch<void>('/users/me/password', {
+        return backendFetch<void>('users/me/password', {
             method: 'PATCH',
             body: JSON.stringify(input)
         })
     },
     removeProfile: () => {
-        return backendFetch<void>('/users/me', {
+        return backendFetch<void>('users/me', {
             method: 'DELETE'
         });
     },
     createInstructor: (input: InstructorInput) => {
-        return backendFetch<InstructorCreated>('/users/instructor', {
+        return backendFetch<InstructorCreated>('users/instructor', {
             method: 'POST',
             body: JSON.stringify(input)
         });
     },
     createImageUpload: (input: MediaUploadInput) => {
-        return backendFetch<UploadTicket>('/users/me/images/upload', {
+        return backendFetch<UploadTicket>('users/me/images/upload', {
             method: 'POST',
             body: JSON.stringify(input)
         });
