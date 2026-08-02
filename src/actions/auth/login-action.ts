@@ -29,6 +29,12 @@ export async function loginAction(_previousState: LoginState, formData: FormData
         });
     } catch (error) {
         if (error instanceof ApiError) {
+            if (error.status === 401) {
+                return { error: {...error.publicBody(), message: "Credenciais inválidas."} };
+            }
+            if (error.status === 429) {
+                return { error: {...error.publicBody(), message: "Muitas tentativas de login. Tente novamente mais tarde."} };
+            }
             return { error: error.publicBody() };
         }
 
