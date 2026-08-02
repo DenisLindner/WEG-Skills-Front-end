@@ -1,7 +1,9 @@
+"use server"
+
 import {ApiError} from "@/services/api-error";
 import {cookies} from "next/headers";
-import {COOKIE_NAME} from "@/lib/session";
 import {NextResponse} from "next/server";
+import {COOKIE_NAME} from "@/lib/session-config";
 
 type ApiResponseOptions = {
     status?: number
