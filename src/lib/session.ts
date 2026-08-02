@@ -58,7 +58,3 @@ export async function getSession(): Promise<SessionResponse> {
         expiresAt: new Date(expiration * 1000).toISOString()
     };
 }
-
-function hasRole(session: SessionResponse, ...roles: UserRole[]) {
-    return session.authenticated && roles.some((role) => session.roles.includes(role));
-}
