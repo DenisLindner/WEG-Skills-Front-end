@@ -10,7 +10,7 @@ import {CourseCard} from "@/components/shared/course-card";
 
 export default async function Home() {
     const session = await getSession()
-    let courses: CourseWithRating[] = []
+    let courses: CourseWithRating[]
     try {
         courses = await courseService.topCourses()
     } catch {
