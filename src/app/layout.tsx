@@ -4,6 +4,9 @@ import "./globals.css"
 export const metadata: Metadata = {
     title: { default: "WEG Skills", template: "%s | WEG Skills" },
     description: "Conhecimento técnico que conecta pessoas, indústria e futuro.",
+    icons: {
+        icon: "/assets/icons/favicon.png",
+    }
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
