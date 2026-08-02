@@ -1,0 +1,33 @@
+import Image from "next/image";
+import {Logo} from "@/components/shared/logo";
+
+export function AuthShell({ eyebrow, title, description, children}: {eyebrow: string, title: string, description: string, children: React.ReactNode}) {
+    return (
+        <main className="grid min-h-screen bg-[#003057] lg:grid-cols-[1.05fr_0.95fr]">
+            <section className="relative hidden overflow-hidden lg:block">
+                <Image src="/assets/images/eletric-tools.jpg" alt="Industrial environment" fill priority className="object-cover" sizes="55vw" />
+                <div className="absolute inset-0 bg-linear-to-br from-[#003057]/90 via-[#003057]/60 to-black/20" />
+                <div className="relative flex h-full flex-col justify-between p-12 xl:p-16">
+                    <Logo inverse />
+                    <div className="max-w-xl pb-10 text-white">
+                        <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-sky-200">Conhecimento em movimento</p>
+                        <blockquote className="text-balance text-4xl font-semibold leading-tight">Desenvolva competências para os desafios de hoje e as oportunidades de amanhã.</blockquote>
+                    </div>
+                </div>
+            </section>
+            <section className="flex items-center justify-center px-4 py-10 sm:px-8">
+                <div className="w-full max-w-lg rounded-3xl bg-white p-6 shadow-2xl sm:p-10">
+                    <div className="mb-8 lg:hidden">
+                        <Logo />
+                    </div>
+                    <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary">{eyebrow}</p>
+                    <h1 className="mt-2 text-3xl font-bold tracking-tight">{title}</h1>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{description}</p>
+                    <div className="mt-8">
+                        {children}
+                    </div>
+                </div>
+            </section>
+        </main>
+    )
+}
