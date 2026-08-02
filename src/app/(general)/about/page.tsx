@@ -16,7 +16,7 @@ export default function AboutPage() {
                             <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/75">O WEG Skills aproxima pessoas de conteúdos técnicos relevantes, com uma experiência de aprendizagem simples, segura e mensurável.</p>
                         </div>
                         <div className="relative aspect-4/3 overflow-hidden rounded-3xl border border-white/15 shadow-2xl">
-                            <Image src="/assets/images/fabric-image.jpg" alt="Ferramentas técnicas organizadas" fill className="object-cover" sizes="(min-width: 1024px) 50vw, 100vw" />
+                            <Image src="/assets/images/fabric-image.jpg" alt="Ferramentas técnicas organizadas" fill className="object-cover" sizes="(min-width: 1024px) 50vw, height: 100vw" />
                         </div>
                     </div>
                 </section>

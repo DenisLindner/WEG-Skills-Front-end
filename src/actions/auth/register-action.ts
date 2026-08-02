@@ -64,6 +64,12 @@ export async function registerAction(
         });
     } catch (error) {
         if (error instanceof ApiError) {
+            if (error.status === 400) {
+                return { error: {...error.publicBody(), fieldErrors: { name: "O nome deve ter entre 3 e 128 caracteres." }, message: "Dados inválidos."} };
+            }
+            if (error.status === 409) {
+                return { error: {...error.publicBody(), fieldErrors: { email: "O e-mail informado já está em uso." }, message: "Dados inválidos."} };
+            }
             return {
                 error: error.publicBody(),
             };
