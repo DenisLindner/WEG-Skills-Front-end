@@ -96,9 +96,6 @@ export default async function CourseDetailsPage({ params }: { params: Promise<{ 
 
     const [course, modules, allReviews, enrolled] = await loadCourse(courseId)
     const reviews = allReviews.slice(0, 6)
-    const average = allReviews.length
-        ? allReviews.reduce((sum, item) => sum + item.rate, 0) / allReviews.length
-        : null
 
     return (
         <main>
@@ -107,7 +104,7 @@ export default async function CourseDetailsPage({ params }: { params: Promise<{ 
                     <div className="flex aspect-video items-center justify-center overflow-hidden rounded-3xl border border-white/15 bg-white/10 shadow-2xl">
                         {course.imageUrl ? (
                             // eslint-disable-next-line @next/next/no-img-element
-                            <img src={course.imageUrl} alt="" className="h-full w-full object-cover" />
+                            <img src={course.imageUrl} alt={course.title + " image"} className="h-full w-full object-cover" />
                         ) : <ImageIcon className="size-16 text-white/30" />}
                     </div>
                     <div>
@@ -116,7 +113,7 @@ export default async function CourseDetailsPage({ params }: { params: Promise<{ 
                         <p className="mt-5 text-lg leading-relaxed text-white/72">{course.description || "Curso técnico disponível para sua jornada de aprendizagem."}</p>
                         <div className="mt-7 flex flex-wrap gap-5 text-sm text-white/75">
                             <span className="flex items-center gap-2"><Layers3 className="size-4" />{modules.length} módulos</span>
-                            <span className="flex items-center gap-2"><Star className="size-4 fill-amber-400 text-amber-400" />{average === null ? "Sem avaliações" : `${average.toFixed(1)}/10`}</span>
+                            <span className="flex items-center gap-2"><Star className="size-4 fill-amber-400 text-amber-400" />{course.rating === null ? "Sem avaliações" : `${course.rating.toFixed(1)}/10`}</span>
                             <span className="flex items-center gap-2"><CheckCircle2 className="size-4" />Certificado ao concluir</span>
                         </div>
                         <div className="mt-8"><EnrollButton courseId={courseId} enrolled={enrolled} /></div>
