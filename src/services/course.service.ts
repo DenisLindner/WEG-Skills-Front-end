@@ -19,7 +19,7 @@ export const courseService = {
             page: params.page ?? 0,
             size: params.size ?? 12
         });
-        return backendFetch<SpringPage<Course>>(`${base}${query}`);
+        return backendFetch<SpringPage<CourseWithRating>>(`${base}${query}`);
     },
     listCoursesPrivate: (params: ListParams = {}) => {
         const base = params.title ? 'courses/private/title?' : 'courses/private?';
@@ -37,7 +37,7 @@ export const courseService = {
         return backendFetch<CourseWithRating[]>(`courses/top-courses`, {auth: false});
     },
     findCourseById: (id: number) => {
-        return backendFetch<Course>(`courses/${id}`);
+        return backendFetch<CourseWithRating>(`courses/${id}`);
     },
     progressCourse: (id: number) => {
         return backendFetch<CourseProgress>(`courses/${id}/progress/me`);
