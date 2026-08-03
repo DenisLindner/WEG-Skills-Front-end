@@ -1,5 +1,6 @@
 import {ListParams} from "@/types/common/list-params";
-import {backendFetch, toQuery} from "@/services/backend.service";
+import {backendFetch} from "@/services/backend.service";
+import {toQuery} from "@/lib/query";
 import {pageQuery} from "@/lib/utils";
 import {SpringPage} from "@/types/common/spring-page";
 import {Course} from "@/types/course/course";
