@@ -1,4 +1,4 @@
-"use server"
+import "server-only";
 
 import {UserRole} from "@/types/user/user-role";
 import {cookies} from "next/headers";

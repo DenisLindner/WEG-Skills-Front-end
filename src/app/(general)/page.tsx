@@ -1,7 +1,7 @@
 import {getSession} from "@/lib/session";
 import {CourseWithRating} from "@/types/course/course-with-rating";
 import Image from "next/image";
-import {ArrowRight, BookOpenCheck, Factory, Gauge, ShieldCheck} from "lucide-react";
+import {ArrowRight, BookOpenCheck, Gauge, ShieldCheck} from "lucide-react";
 import Link from "next/link";
 import {buttonVariants} from "@/components/ui/button";
 import {Card} from "@/components/ui/card";
@@ -25,17 +25,13 @@ export default async function Home() {
                 <div className="absolute inset-0 bg-linear-to-r from-[#002b4d] via-[#003057]/90 to-[#003057]/30"/>
                 <div className="content-grid relative flex min-h-162.5 items-center py-20">
                     <div className="max-w-3xl space-y-7">
-                        <div
-                            className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium backdrop-blur">
-                            <Factory className="size-4"/> Conhecimento que movimenta a indústria
+                        <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium backdrop-blur">
+                            Conhecimento que movimenta a indústria
                         </div>
-                        <h1 className="text-balance text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">Aprenda
-                            hoje. Transforme o amanhã.</h1>
-                        <p className="max-w-2xl text-balance text-lg leading-relaxed text-white/78 sm:text-xl">Uma
-                            plataforma para desenvolver competências técnicas com a experiência e a excelência WEG.</p>
+                        <h1 className="text-balance text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">Aprenda hoje. Transforme o amanhã.</h1>
+                        <p className="max-w-2xl text-balance text-lg leading-relaxed text-white/78 sm:text-xl">Uma plataforma para desenvolver competências técnicas com a experiência e a excelência WEG.</p>
                         <div className="flex flex-wrap gap-3">
-                            <Link href={session.authenticated ? "/courses" : "/register"}
-                                  className={buttonVariants({size: "lg"})}>{session.authenticated ? "Explorar cursos" : "Começar agora"}<ArrowRight/></Link>
+                            <Link href={session.authenticated ? "/courses" : "/register"} className={buttonVariants({size: "lg"})}>{session.authenticated ? "Explorar cursos" : "Começar agora"}<ArrowRight/></Link>
                             <Link href="/about" className={buttonVariants({
                                 variant: "outline",
                                 size: "lg",

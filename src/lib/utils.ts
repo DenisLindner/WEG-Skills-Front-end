@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import {ListParams} from "@/types/common/list-params";
-import {toQuery} from "@/services/backend.service";
+import {toQuery} from "@/lib/query";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

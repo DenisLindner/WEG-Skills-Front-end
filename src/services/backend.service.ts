@@ -1,3 +1,5 @@
+import "server-only";
+
 import {getAccessToken} from "@/lib/session";
 import {ApiError} from "@/services/api-error";
 import {proxyMediaUrls} from "@/lib/media";
@@ -54,14 +56,4 @@ export async function backendFetch<T>(path: string, options: BackendOptions = {}
 
     const body: unknown = await response.json();
     return proxyMediaUrls(body, getMediaUrl()) as T;
-}
-
-export function toQuery(params: Record<string, string | number | undefined>) {
-    const query = new URLSearchParams();
-    Object.entries(params).forEach(([key, value]) => {
-        if (value !== undefined && value !== "") {
-            query.set(key, String(value));
-        }
-    })
-    return query.toString();
 }

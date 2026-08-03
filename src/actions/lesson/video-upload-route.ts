@@ -1,5 +1,5 @@
 import {apiResponse} from "@/lib/response";
-import {lessonService} from "@/services/lessonServices.service";
+import {lessonService} from "@/services/lesson.service";
 import {MediaUploadInput} from "@/types/media/media-upload-input";
 
 export async function videoUploadRoute(id: number, input: MediaUploadInput) {
