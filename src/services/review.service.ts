@@ -1,4 +1,5 @@
-import {backendFetch, toQuery} from "@/services/backend.service";
+import {backendFetch} from "@/services/backend.service";
+import {toQuery} from "@/lib/query";
 import {Review} from "@/types/review/review";
 import {SpringPage} from "@/types/common/spring-page";
 
