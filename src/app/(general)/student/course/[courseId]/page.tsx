@@ -11,6 +11,7 @@ import Link from "next/link";
 import {CheckCircle2, Circle, PlayCircle} from "lucide-react";
 import {Progress} from "@/components/ui/progress";
 import {CertificateButton} from "@/components/student/certificate-button";
+import {ApiError} from "@/services/api-error";
 
 export const metadata: Metadata = { title: "Curso" }
 
@@ -23,9 +24,14 @@ export default async function StudentCoursePage({ params }: { params: Promise<{ 
     if (!Number.isSafeInteger(courseId) || courseId <= 0) {
         notFound()
     }
-    const enrollments = await enrollmentService.mineEnrollment(0, 100)
-    if (!enrollments.content.some((item) => item.courseId === courseId)) {
-        redirect(`/courses/${courseId}`)
+    try {
+        await enrollmentService.mineEnrollmentByCourse(courseId);
+    } catch (error) {
+        if (error instanceof ApiError && error.status === 404) {
+            redirect(`/courses/${courseId}`);
+        }
+
+        throw error;
     }
     const [course, modules, progress] = await Promise.all(
         [courseService.findCourseById(courseId), moduleService.listModulesByCourse(courseId, 0, 100), courseService.progressCourse(courseId)]
