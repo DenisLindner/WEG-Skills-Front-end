@@ -116,7 +116,9 @@ export default async function CourseDetailsPage({ params }: { params: Promise<{ 
                             <span className="flex items-center gap-2"><Star className="size-4 fill-amber-400 text-amber-400" />{course.rating === null ? "Sem avaliações" : `${course.rating.toFixed(1)}/10`}</span>
                             <span className="flex items-center gap-2"><CheckCircle2 className="size-4" />Certificado ao concluir</span>
                         </div>
-                        <div className="mt-8"><EnrollButton courseId={courseId} enrolled={enrolled} /></div>
+                        <div className="mt-8">
+                            <EnrollButton courseId={courseId} enrolled={enrolled} />
+                        </div>
                     </div>
                 </div>
             </section>
