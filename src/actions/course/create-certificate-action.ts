@@ -1,4 +1,4 @@
-"use server";
+"use server"
 
 import {getSession} from "@/lib/session";
 import {ApiError} from "@/services/api-error";
