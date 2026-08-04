@@ -50,20 +50,15 @@ async function loadCourseOrNotFound(courseId: number) {
 }
 
 async function isEnrolled(courseId: number) {
-    let page = 0;
-
-    while (true) {
-        const enrollments = await enrollmentService.mineEnrollment(page, PAGE_SIZE);
-
-        if (enrollments.content.some((item) => item.courseId === courseId)) {
-            return true;
-        }
-
-        if (enrollments.last || page + 1 >= enrollments.totalPages) {
+    try {
+        await enrollmentService.mineEnrollmentByCourse(courseId);
+        return true;
+    } catch (error) {
+        if (error instanceof ApiError && error.status === 404) {
             return false;
         }
 
-        page += 1;
+        throw error;
     }
 }
 
@@ -116,7 +111,9 @@ export default async function CourseDetailsPage({ params }: { params: Promise<{ 
                             <span className="flex items-center gap-2"><Star className="size-4 fill-amber-400 text-amber-400" />{course.rating === null ? "Sem avaliações" : `${course.rating.toFixed(1)}/10`}</span>
                             <span className="flex items-center gap-2"><CheckCircle2 className="size-4" />Certificado ao concluir</span>
                         </div>
-                        <div className="mt-8"><EnrollButton courseId={courseId} enrolled={enrolled} /></div>
+                        <div className="mt-8">
+                            <EnrollButton courseId={courseId} enrolled={enrolled} />
+                        </div>
                     </div>
                 </div>
             </section>

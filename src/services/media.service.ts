@@ -6,7 +6,11 @@ import { MediaTarget } from "@/types/media/media-target";
 
 export const mediaService = {
     complete : (mediaId: number, target: MediaTarget, targetId?: number) => {
-        const suffix = target === "me" ? "me/complete" : `${target}/${target}/${targetId}/complete`
-        return backendFetch<Media> (`medias/${mediaId}${suffix}`, {method: "POST"})
+        if (target !== "me" && targetId === undefined) {
+            throw new Error("Target id is required");
+        }
+
+        const suffix = target === "me" ? "me/complete" : `${target}/${targetId}/complete`;
+        return backendFetch<Media>(`medias/${mediaId}/${suffix}`, {method: "POST"});
     },
 }
