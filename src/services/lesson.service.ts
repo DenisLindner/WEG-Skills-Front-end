@@ -26,8 +26,8 @@ export const lessonService = {
         }),
 
     update: (id: number, input: Partial<Omit<LessonInput, "moduleId">>) =>
-        backendFetch<Lesson>("lessons", {
-            method: "POST",
+        backendFetch<Lesson>(`lessons/${id}`, {
+            method: "PATCH",
             body: JSON.stringify(input),
         }),
 
