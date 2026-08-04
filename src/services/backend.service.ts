@@ -2,7 +2,6 @@ import "server-only";
 
 import {getAccessToken} from "@/lib/session";
 import {ApiError} from "@/services/api-error";
-import {proxyMediaUrls} from "@/lib/media";
 
 type BackendOptions = RequestInit & {
     auth?: boolean
@@ -12,14 +11,6 @@ function getBaseUrl() {
     const url = process.env.API_URL;
     if (!url) {
         throw new Error('Missing API URL');
-    }
-    return url;
-}
-
-function getMediaUrl() {
-    const url = process.env.MEDIA_URL;
-    if (!url) {
-        return 'http://localhost:9000';
     }
     return url;
 }
@@ -54,6 +45,5 @@ export async function backendFetch<T>(path: string, options: BackendOptions = {}
         return undefined as T;
     }
 
-    const body: unknown = await response.json();
-    return proxyMediaUrls(body, getMediaUrl()) as T;
+    return await response.json() as T;
 }
