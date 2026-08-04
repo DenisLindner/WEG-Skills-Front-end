@@ -7,6 +7,7 @@ import {enrollmentService} from "@/services/enrollment.service";
 import Link from "next/link";
 import {ArrowLeft} from "lucide-react";
 import {LessonPlayer} from "@/components/student/lesson-player";
+import {ApiError} from "@/services/api-error";
 
 export const metadata: Metadata = { title: "Aula" }
 
@@ -22,9 +23,14 @@ export default async function LessonPage({ params }: { params: Promise<{ courseI
         notFound()
     }
 
-    const enrollments = await enrollmentService.mineEnrollment(0, 100);
-    if (!enrollments.content.some((item) => item.courseId === courseId)) {
-        redirect(`/courses/${courseId}`)
+    try {
+        await enrollmentService.mineEnrollmentByCourse(courseId);
+    } catch (error) {
+        if (error instanceof ApiError && error.status === 404) {
+            redirect(`/courses/${courseId}`);
+        }
+
+        throw error;
     }
 
     const [lesson, progress] = await Promise.all(
