@@ -6,6 +6,9 @@ import {InstructorInput} from "@/types/user/instructor-input";
 import {InstructorCreated} from "@/types/user/instructor-created";
 import {MediaUploadInput} from "@/types/media/media-upload-input";
 import {UploadTicket} from "@/types/media/upload-ticket";
+import {SpringPage} from "@/types/common/spring-page";
+import {PaginationParams} from "@/types/common/pagination-params";
+import {pageQuery} from "@/lib/utils";
 
 export const userService = {
     meProfile: () => {
@@ -32,6 +35,14 @@ export const userService = {
         return backendFetch<InstructorCreated>('users/instructor', {
             method: 'POST',
             body: JSON.stringify(input)
+        });
+    },
+    listInstructors: (params: PaginationParams = {}) => {
+        return backendFetch<SpringPage<UserProfile>>(`users/admin/instructor?${pageQuery(params)}`);
+    },
+    removeInstructor: (id: number) => {
+        return backendFetch<void>(`users/instructor/${id}`, {
+            method: 'DELETE'
         });
     },
     createImageUpload: (input: MediaUploadInput) => {
