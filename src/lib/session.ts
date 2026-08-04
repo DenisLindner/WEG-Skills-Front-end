@@ -34,6 +34,10 @@ export async function getAccessToken() {
     return (await cookies()).get(COOKIE_NAME)?.value ?? null;
 }
 
+export async function clearSession() {
+    (await cookies()).delete(COOKIE_NAME);
+}
+
 export async function getSession(): Promise<SessionResponse> {
     const token = await getAccessToken();
     if (!token) {
