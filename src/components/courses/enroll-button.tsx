@@ -14,7 +14,7 @@ export function EnrollButton({ courseId, enrolled }: { courseId: number; enrolle
     const [state, formAction, pending] = useActionState(action, initialState);
 
     if (enrolled || state.success) {
-        return <Link href="#course-content" className={cn(buttonVariants({size: "lg"}), "w-full sm:w-auto")}><CheckCircle2/>Acessar conteúdo</Link>
+        return <Link href={`/student/course/${courseId}`} className={cn(buttonVariants({size: "lg"}), "w-full sm:w-auto")}><CheckCircle2/>Acessar conteúdo</Link>
     }
 
     return (
