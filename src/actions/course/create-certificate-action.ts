@@ -1,6 +1,6 @@
 "use server"
 
-import {getSession} from "@/lib/session";
+import {clearSession, getSession} from "@/lib/session";
 import {ApiError} from "@/services/api-error";
 import {courseService} from "@/services/course.service";
 
@@ -29,6 +29,7 @@ export async function createCertificateAction(courseId: number, _previousState: 
     } catch (error) {
         if (error instanceof ApiError) {
             if (error.status === 401) {
+                await clearSession();
                 return { error: "Sua sessão expirou. Entre novamente." };
             }
 

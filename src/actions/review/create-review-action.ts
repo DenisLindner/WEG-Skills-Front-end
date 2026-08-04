@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getSession } from "@/lib/session";
+import { clearSession, getSession } from "@/lib/session";
 import { reviewService } from "@/services/review.service";
 import { ApiError } from "@/services/api-error";
 
@@ -42,6 +42,7 @@ export async function createReviewAction(
     } catch (error) {
         if (error instanceof ApiError) {
             if (error.status === 401) {
+                await clearSession();
                 return { error: "Sua sessão expirou. Entre novamente." };
             }
 

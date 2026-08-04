@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { enrollmentService } from "@/services/enrollment.service";
 import { ApiError } from "@/services/api-error";
-import { getSession } from "@/lib/session";
+import { clearSession, getSession } from "@/lib/session";
 
 export type EnrollState = {
     success?: boolean;
@@ -30,7 +30,13 @@ export async function enrollAction(courseId: number, _previousState: EnrollState
     } catch (error) {
         if (error instanceof ApiError) {
             if (error.status === 401) {
+                await clearSession();
                 return { error: "Sua sessão expirou. Entre novamente." };
+            }
+
+            if (error.status === 409) {
+                revalidatePath(`/courses/${courseId}`);
+                return { success: true };
             }
 
             return { error: error.message };

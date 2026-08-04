@@ -1,7 +1,7 @@
 "use server";
 
 import {revalidatePath} from "next/cache";
-import {getSession} from "@/lib/session";
+import {clearSession, getSession} from "@/lib/session";
 import {ApiError} from "@/services/api-error";
 import {lessonService} from "@/services/lesson.service";
 
@@ -38,6 +38,7 @@ export async function completeLessonAction(
     } catch (error) {
         if (error instanceof ApiError) {
             if (error.status === 401) {
+                await clearSession();
                 return {error: "Sua sessão expirou. Entre novamente."};
             }
 

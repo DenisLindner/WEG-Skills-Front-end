@@ -1,7 +1,7 @@
 "use server"
 
 import {lessonService} from "@/services/lesson.service";
-import {getSession} from "@/lib/session";
+import {clearSession, getSession} from "@/lib/session";
 import {ApiError} from "@/services/api-error";
 import {LessonDetails} from "@/types/lesson/lesson-details";
 
@@ -30,6 +30,7 @@ export async function findLessonByIdAction(lessonId: number, _previousState: Les
     } catch (error) {
         if (error instanceof ApiError) {
             if (error.status === 401) {
+                await clearSession();
                 return { error: "Sua sessão expirou. Entre novamente." };
             }
 
