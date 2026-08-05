@@ -1,7 +1,8 @@
 "use client"
 
-import { AlertTriangle, RefreshCw } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import { AlertTriangle, House, RefreshCw } from "lucide-react"
+import { Button, buttonVariants } from "@/components/ui/button"
 
 export default function GlobalError({ reset }: { error: Error & { digest?: string }; reset: () => void }) {
 
@@ -12,7 +13,10 @@ export default function GlobalError({ reset }: { error: Error & { digest?: strin
             </div>
             <h1 className="mt-6 text-3xl font-bold">Não foi possível carregar esta página</h1>
             <p className="mt-3 max-w-md text-muted-foreground">Verifique sua conexão e tente novamente. Se o problema continuar, entre novamente na plataforma.</p>
-            <Button type="button" className="mt-7" onClick={reset}><RefreshCw />Tentar novamente</Button>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                <Button type="button" onClick={reset}><RefreshCw />Tentar novamente</Button>
+                <Link href="/" className={buttonVariants({variant: "outline"})}><House />Voltar ao início</Link>
+            </div>
         </main>
     )
 

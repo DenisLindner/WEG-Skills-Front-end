@@ -91,6 +91,7 @@ export default async function CourseDetailsPage({ params }: { params: Promise<{ 
 
     const [course, modules, allReviews, enrolled] = await loadCourse(courseId)
     const reviews = allReviews.slice(0, 6)
+    const published = course.status === "PUBLISHED"
 
     return (
         <main>
@@ -103,7 +104,11 @@ export default async function CourseDetailsPage({ params }: { params: Promise<{ 
                         ) : <ImageIcon className="size-16 text-white/30" />}
                     </div>
                     <div>
-                        <Badge className="mb-5 bg-sky-300/15 text-sky-100">Curso publicado</Badge>
+                        <Badge className={published
+                            ? "mb-5 bg-sky-300/15 text-sky-100"
+                            : "mb-5 bg-amber-300/15 text-amber-100"}>
+                            {published ? "Curso publicado" : "Rascunho"}
+                        </Badge>
                         <h1 className="text-balance text-4xl font-bold sm:text-5xl">{course.title}</h1>
                         <p className="mt-5 text-lg leading-relaxed text-white/72">{course.description || "Curso técnico disponível para sua jornada de aprendizagem."}</p>
                         <div className="mt-7 flex flex-wrap gap-5 text-sm text-white/75">
@@ -112,7 +117,13 @@ export default async function CourseDetailsPage({ params }: { params: Promise<{ 
                             <span className="flex items-center gap-2"><CheckCircle2 className="size-4" />Certificado ao concluir</span>
                         </div>
                         <div className="mt-8">
-                            <EnrollButton courseId={courseId} enrolled={enrolled} />
+                            {published || enrolled ? (
+                                <EnrollButton courseId={courseId} enrolled={enrolled} />
+                            ) : (
+                                <p className="max-w-md rounded-xl border border-amber-200/20 bg-amber-300/10 p-4 text-sm text-amber-100" role="status">
+                                    Este curso ainda não está disponível para novas matrículas.
+                                </p>
+                            )}
                         </div>
                     </div>
                 </div>
