@@ -78,7 +78,9 @@ export function CertificateValidator({
 
     function submit(event: React.SubmitEvent<HTMLFormElement>) {
         event.preventDefault()
-        if (pending) return
+        if (pending) {
+            return
+        }
         void validate(code)
     }
 
