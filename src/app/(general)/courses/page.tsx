@@ -22,10 +22,17 @@ export default async function CoursesPage({ searchParams }: { searchParams: Prom
     const requestedPage = Number(query.page)
     const page = Number.isSafeInteger(requestedPage) && requestedPage >= 0 ? requestedPage : 0
     const title = query.title?.trim().slice(0, 128)
+    const titleError = title && title.length < 3
+        ? "Informe ao menos 3 caracteres para buscar por título."
+        : undefined
 
     let courses
     try {
-        courses = await courseService.listCoursesPublished({ page, size: 12, title })
+        courses = await courseService.listCoursesPublished({
+            page: titleError ? 0 : page,
+            size: 12,
+            title: titleError ? undefined : title
+        })
     } catch (error) {
         if (error instanceof ApiError && error.status === 401) {
             redirect("/login?next=/courses")
@@ -42,16 +49,26 @@ export default async function CoursesPage({ searchParams }: { searchParams: Prom
                 <p className="mt-3 text-muted-foreground">Explore os cursos publicados e avance nas competências que fazem diferença.</p>
             </div>
             <Form className="mb-10 flex max-w-2xl gap-2" action="/courses">
-                <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                    <Input name="title" defaultValue={title} placeholder="Buscar por título" className="pl-9" />
+                <div className="flex-1">
+                    <div className="relative">
+                        <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                        <Input
+                            name="title"
+                            defaultValue={title}
+                            placeholder="Buscar por título"
+                            className="pl-9"
+                            aria-invalid={Boolean(titleError)}
+                            aria-describedby={titleError ? "course-search-error" : undefined}
+                        />
+                    </div>
+                    {titleError && <p id="course-search-error" className="mt-2 text-sm text-destructive">{titleError}</p>}
                 </div>
                 <Button type="submit">Buscar</Button>
             </Form>
             {courses.content.length ? <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">{courses.content.map(course =>
                 <CourseCard key={course.id} course={course} />)}</div> :
                 <Card className="border-dashed p-12 text-center"><h2 className="font-semibold">Nenhum curso encontrado</h2><p className="mt-2 text-sm text-muted-foreground">Tente outro termo ou volte ao catálogo completo.</p></Card>}
-            <PaginationLinks page={courses.number} totalPages={courses.totalPages} pathname="/courses" query={{ title }} />
+            <PaginationLinks page={courses.number} totalPages={courses.totalPages} pathname="/courses" query={{ title: titleError ? undefined : title }} />
         </main>
     )
 }
