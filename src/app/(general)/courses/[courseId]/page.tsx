@@ -123,10 +123,15 @@ export default async function CourseDetailsPage({ params }: { params: Promise<{ 
                     <div className="mt-6 space-y-3">
                         {modules.length ? modules.map((module) => (
                             <Card key={module.id} className="flex items-center gap-4 p-5">
-                                <div className="flex size-11 items-center justify-center rounded-xl bg-secondary text-primary">
-                                    <BookOpen className="size-5" />
+                                <div className="flex h-16 w-24 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-secondary text-primary">
+                                    {module.imageUrl ? (
+                                        // eslint-disable-next-line @next/next/no-img-element
+                                        <img src={module.imageUrl} alt={"Imagem do módulo " + module.title} className="h-full w-full object-cover" />
+                                    ) : (
+                                        <BookOpen className="size-5" />
+                                    )}
                                 </div>
-                                <div>
+                                <div className="min-w-0">
                                     <p className="text-xs font-bold uppercase tracking-wide text-primary">Módulo {module.position}</p>
                                     <h3 className="font-semibold">{module.title}</h3>
                                     <p className="mt-1 text-sm text-muted-foreground">{module.description || "Conteúdo do módulo"}</p>

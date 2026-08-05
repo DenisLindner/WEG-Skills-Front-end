@@ -8,7 +8,7 @@ import {lessonService} from "@/services/lesson.service";
 import {Badge} from "@/components/ui/badge";
 import {Card} from "@/components/ui/card";
 import Link from "next/link";
-import {CheckCircle2, Circle, PlayCircle} from "lucide-react";
+import {BookOpen, CheckCircle2, Circle, PlayCircle} from "lucide-react";
 import {Progress} from "@/components/ui/progress";
 import {CertificateButton} from "@/components/student/certificate-button";
 import {ApiError} from "@/services/api-error";
@@ -53,9 +53,19 @@ export default async function StudentCoursePage({ params }: { params: Promise<{ 
                     <div className="mt-10 space-y-5">
                         {moduleLessons.map(({ module, lessons }) =>
                             <Card key={module.id} className="overflow-hidden">
-                                <div className="border-b border-border bg-secondary/45 p-5">
-                                    <p className="text-xs font-bold uppercase tracking-wide text-primary">Módulo {module.position}</p>
-                                    <h2 className="mt-1 text-lg font-semibold">{module.title}</h2>
+                                <div className="flex items-center gap-4 border-b border-border bg-secondary/45 p-5">
+                                    <div className="flex h-16 w-24 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-white text-primary">
+                                        {module.imageUrl ? (
+                                            // eslint-disable-next-line @next/next/no-img-element
+                                            <img src={module.imageUrl} alt={"Imagem do módulo " + module.title} className="h-full w-full object-cover" />
+                                        ) : (
+                                            <BookOpen className="size-5" />
+                                        )}
+                                    </div>
+                                    <div className="min-w-0">
+                                        <p className="text-xs font-bold uppercase tracking-wide text-primary">Módulo {module.position}</p>
+                                        <h2 className="mt-1 text-lg font-semibold">{module.title}</h2>
+                                    </div>
                                 </div>
                                 <div className="divide-y divide-border">{lessons.content.map((lesson) =>
                                 { const done = completed.has(lesson.id);

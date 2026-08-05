@@ -5,11 +5,11 @@ import {Badge} from "@/components/ui/badge";
 import {Course} from "@/types/course/course";
 import {CourseWithRating} from "@/types/course/course-with-rating";
 
-export function CourseCard({ course }: { course: Course | CourseWithRating }) {
+export function CourseCard({course, href}: {course: Course | CourseWithRating; href?: string}) {
     const rating = "rating" in course ? course.rating : null
     return (
         <Card className="group overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl">
-            <Link href={`/courses/${course.id}`} className="block focus-visible:ring-inset">
+            <Link href={href ?? `/courses/${course.id}`} className="block focus-visible:ring-inset">
                 <div className="relative flex aspect-video items-center justify-center overflow-hidden bg-linear-to-br from-[#dcecf8] to-[#b8d7ee]">
                     {course.imageUrl ? (
                         // eslint-disable-next-line @next/next/no-img-element
@@ -33,4 +33,3 @@ export function CourseCard({ course }: { course: Course | CourseWithRating }) {
         </Card>
     )
 }
-
