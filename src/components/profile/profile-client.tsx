@@ -33,10 +33,18 @@ function phoneDigits(value: string) {
 function formatPhone(value: string) {
     const digits = phoneDigits(value)
 
-    if (!digits) return ""
-    if (digits.length <= 2) return `(${digits}`
-    if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`
-    if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`
+    if (!digits) {
+        return ""
+    }
+    if (digits.length <= 2) {
+        return `(${digits}`
+    }
+    if (digits.length <= 6) {
+        return `(${digits.slice(0, 2)}) ${digits.slice(2)}`
+    }
+    if (digits.length <= 10) {
+        return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`
+    }
 
     return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`
 }
@@ -50,10 +58,18 @@ function friendlyError(error: unknown) {
 function translateProfileErrors(errors: ApiFieldErrors) {
     const translated = {...errors}
 
-    if (translated.name) translated.name = "Informe um nome entre 3 e 128 caracteres."
-    if (translated.email) translated.email = "Informe um e-mail válido."
-    if (translated.phone) translated.phone = "Informe um telefone com DDD e 10 ou 11 números."
-    if (translated.birthday) translated.birthday = "Informe uma data de nascimento anterior a hoje."
+    if (translated.name) {
+        translated.name = "Informe um nome entre 3 e 128 caracteres."
+    }
+    if (translated.email) {
+        translated.email = "Informe um e-mail válido."
+    }
+    if (translated.phone) {
+        translated.phone = "Informe um telefone com DDD e 10 ou 11 números."
+    }
+    if (translated.birthday) {
+        translated.birthday = "Informe uma data de nascimento anterior a hoje."
+    }
 
     return translated
 }
@@ -61,8 +77,12 @@ function translateProfileErrors(errors: ApiFieldErrors) {
 function translatePasswordErrors(errors: ApiFieldErrors) {
     const translated = {...errors}
 
-    if (translated.actualPassword) translated.actualPassword = "Verifique a senha atual informada."
-    if (translated.password) translated.password = "Use de 8 a 72 caracteres, com letra maiúscula, minúscula, número e caractere especial."
+    if (translated.actualPassword) {
+        translated.actualPassword = "Verifique a senha atual informada."
+    }
+    if (translated.password) {
+        translated.password = "Use de 8 a 72 caracteres, com letra maiúscula, minúscula, número e caractere especial."
+    }
 
     return translated
 }

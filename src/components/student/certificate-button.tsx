@@ -14,13 +14,24 @@ export function CertificateButton({ courseId, enabled }: { courseId: number; ena
     const action = createCertificateAction.bind(null, courseId);
     const [state, formAction, pending] = useActionState(action, initialState);
     const [copied, setCopied] = useState(false)
+    const [copyError, setCopyError] = useState("")
 
     async function copy() {
         if (!state.code) {
             return
         }
-        await navigator.clipboard.writeText(`${window.location.origin}/certificate?code=${state.code}`)
-        setCopied(true); window.setTimeout(() => setCopied(false), 1800)
+
+        setCopyError("")
+        try {
+            const validationUrl = new URL("/certificate", window.location.origin)
+            validationUrl.searchParams.set("code", state.code)
+            await navigator.clipboard.writeText(validationUrl.toString())
+            setCopied(true)
+            window.setTimeout(() => setCopied(false), 1800)
+        } catch (error) {
+            console.error("Certificate link copy failed", error)
+            setCopyError("Não foi possível copiar o link. Tente novamente.")
+        }
     }
 
     return (
@@ -33,6 +44,7 @@ export function CertificateButton({ courseId, enabled }: { courseId: number; ena
             </form>
             {!enabled && <p className="mt-2 text-xs text-muted-foreground">Disponível ao concluir todas as aulas.</p>}
             {state.error && <p className="mt-2 text-sm text-destructive" role="alert">{state.error}</p>}
+            {copyError && <p className="mt-2 text-sm text-destructive" role="alert">{copyError}</p>}
             {state.success && state.code &&
                 <div className="mt-4 rounded-xl border border-primary/20 bg-secondary/60 p-4">
                     <p className="text-sm font-semibold">Certificado disponível</p>
