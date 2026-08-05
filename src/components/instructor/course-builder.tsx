@@ -121,11 +121,13 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
     const router = useRouter()
     const busy = pending !== ""
     const lessonCount = modules.reduce((total, module) => total + module.lessons.length, 0)
+    const emptyModules = modules.filter((module) => module.lessons.length === 0)
+    const allModulesHaveLessons = modules.length > 0 && emptyModules.length === 0
     const allLessonsHaveVideo = lessonCount > 0 && modules.every((module) => module.lessons.every((lesson) => lesson.hasVideo))
     const publicationRequirements = [
         {label: "Capa do curso", complete: Boolean(course.imageUrl)},
         {label: "Ao menos um módulo", complete: modules.length > 0},
-        {label: "Ao menos uma aula", complete: lessonCount > 0},
+        {label: "Ao menos uma aula em cada módulo", complete: allModulesHaveLessons},
         {label: "Vídeo em todas as aulas", complete: allLessonsHaveVideo},
     ]
 
@@ -501,10 +503,16 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
             (total, module) => total + module.lessons.filter((lesson) => !lesson.hasVideo).length,
             0,
         )
+        const emptyModuleNames = emptyModules.map((module) => '"' + module.title + '"')
+        const emptyModulesText = emptyModuleNames.length > 1
+            ? emptyModuleNames.slice(0, -1).join(", ") + " e " + emptyModuleNames.at(-1)
+            : emptyModuleNames[0]
         const missingRequirements = [
             !course.imageUrl ? "adicione uma capa ao curso" : "",
             modules.length === 0 ? "adicione ao menos um módulo" : "",
-            lessonCount === 0 ? "adicione ao menos uma aula" : "",
+            modules.length > 0 && emptyModules.length > 0
+                ? "adicione ao menos uma aula " + (emptyModules.length === 1 ? "ao módulo " : "aos módulos ") + emptyModulesText
+                : "",
             lessonsWithoutVideo === 1 ? "envie o vídeo da aula que ainda está sem vídeo" : "",
             lessonsWithoutVideo > 1 ? "envie os vídeos das " + lessonsWithoutVideo + " aulas que ainda estão sem vídeo" : "",
         ].filter(Boolean)
@@ -514,6 +522,11 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
         const publicationFallback = requirementsText
             ? "Antes de publicar, " + requirementsText + "."
             : "O curso ainda não atende aos requisitos de publicação. Revise os itens indicados."
+
+        if (missingRequirements.length > 0) {
+            showNotice("publish", "error", publicationFallback)
+            return
+        }
 
         await run("publish", async () => {
             const result = await publishCourseAction(course.id)
