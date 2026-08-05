@@ -10,5 +10,5 @@ export async function changePasswordAction(input: PasswordChangeInput) {
     return runAction(async () => {
         await userService.changePassword(input);
         (await cookies()).delete(COOKIE_NAME);
-    });
+    }, {clearSessionOnUnauthorized: false});
 }

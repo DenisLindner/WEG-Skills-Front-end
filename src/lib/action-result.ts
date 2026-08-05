@@ -8,7 +8,11 @@ export type ActionResult<T> =
     | { success: true; data: T }
     | { success: false; status: number; error: PublicApiError };
 
-export async function runAction<T>(action: () => Promise<T>): Promise<ActionResult<T>> {
+type RunActionOptions = {
+    clearSessionOnUnauthorized?: boolean
+}
+
+export async function runAction<T>(action: () => Promise<T>, options: RunActionOptions = {}): Promise<ActionResult<T>> {
     try {
         return {
             success: true,
@@ -16,7 +20,7 @@ export async function runAction<T>(action: () => Promise<T>): Promise<ActionResu
         };
     } catch (error) {
         if (error instanceof ApiError) {
-            if (error.status === 401) {
+            if (error.status === 401 && options.clearSessionOnUnauthorized !== false) {
                 await clearSession();
             }
 

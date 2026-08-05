@@ -17,3 +17,6 @@ export async function uploadMedia(ticket: UploadTicket, file: File) {
         throw new Error("Não foi possível enviar o arquivo.");
     }
 }
+
+export const imageTypes = ["image/jpeg", "image/png", "image/webp"]
+export const maxImageSize = 5 * 1024 * 1024
