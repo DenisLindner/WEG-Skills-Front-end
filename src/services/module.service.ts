@@ -13,9 +13,6 @@ export const moduleService = {
             `modules/course/${courseId}?${toQuery({ page, size })}`
         );
     },
-    findModuleById: (id: number) => {
-        return backendFetch<Module>(`modules/${id}`);
-    },
     createModule: (input: ModuleInput) => {
         return backendFetch<Module>('modules', {
             method: 'POST',

@@ -7,9 +7,31 @@ import {ApiError} from "@/services/api-error";
 import {redirect} from "next/navigation";
 import {COOKIE_NAME, cookieOptions} from "@/lib/session-config";
 
+function safeNextPath(formData: FormData) {
+    const value = formData.get("next");
+
+    if (typeof value !== "string" || value.length > 2048 || !value.startsWith("/")) {
+        return "/";
+    }
+
+    try {
+        const baseUrl = new URL("http://local");
+        const destination = new URL(value, baseUrl);
+
+        if (destination.origin !== baseUrl.origin) {
+            return "/";
+        }
+
+        return `${destination.pathname}${destination.search}${destination.hash}`;
+    } catch {
+        return "/";
+    }
+}
+
 export async function loginAction(_previousState: LoginState, formData: FormData): Promise<LoginState> {
     const email = String(formData.get("email") ?? "").trim().toLowerCase();
     const password = String(formData.get("password") ?? "");
+    const nextPath = safeNextPath(formData);
 
     if (!email || !password) {
         return {
@@ -46,5 +68,5 @@ export async function loginAction(_previousState: LoginState, formData: FormData
         };
     }
 
-    redirect('/');
+    redirect(nextPath);
 }
