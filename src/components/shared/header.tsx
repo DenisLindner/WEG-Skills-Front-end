@@ -5,7 +5,7 @@ import {hasRole} from "@/lib/session-utils";
 import {Logo} from "@/components/shared/logo";
 import {cn} from "@/lib/utils";
 import {buttonVariants} from "@/components/ui/button";
-import {BookOpen, ChevronDown, GraduationCap, Menu, ShieldCheck, UserRound} from "lucide-react";
+import {ChevronDown, Menu, UserRound} from "lucide-react";
 import {LogoutButton} from "@/components/shared/logout";
 
 type HeaderProps = { session: SessionResponse; user?: UserProfile | null }
@@ -93,5 +93,3 @@ export function Header({ session, user }: HeaderProps) {
         </header>
     )
 }
-
-export const roleIcons = { STUDENT: GraduationCap, INSTRUCTOR: BookOpen, ADMIN: ShieldCheck }
