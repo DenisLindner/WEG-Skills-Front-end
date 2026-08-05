@@ -6,7 +6,6 @@ import {
     ArrowDown,
     ArrowUp,
     CheckCircle2,
-    CircleAlert,
     FileVideo,
     ImageIcon,
     ImagePlus,
@@ -17,7 +16,6 @@ import {
     Save,
     Send,
     Trash2,
-    X,
 } from "lucide-react";
 import {Module} from "@/types/module/module";
 import {Lesson} from "@/types/lesson/lesson";
@@ -53,6 +51,39 @@ export type BuilderModule = Module & {lessons: BuilderLesson[]}
 type Notice = {
     kind: "success" | "error"
     text: string
+    area: "course" | "content"
+}
+
+function noticeArea(key: string): Notice["area"] {
+    const contentKeys = ["new-module", "reorder-modules"]
+    const contentPrefixes = [
+        "edit-module-",
+        "new-lesson-",
+        "edit-lesson-",
+        "module-image-",
+        "video-",
+        "delete-module-",
+        "delete-lesson-",
+        "reorder-lessons-",
+    ]
+
+    return contentKeys.includes(key) || contentPrefixes.some((prefix) => key.startsWith(prefix))
+        ? "content"
+        : "course"
+}
+
+function NoticeMessage({notice}: {notice: Notice}) {
+    return (
+        <div
+            className={notice.kind === "error"
+                ? "rounded-xl border border-destructive/20 bg-destructive/10 p-4 text-sm text-destructive"
+                : "rounded-xl border border-primary/15 bg-secondary p-4 text-sm"}
+            role={notice.kind === "error" ? "alert" : "status"}
+            aria-live="polite"
+        >
+            {notice.text}
+        </div>
+    )
 }
 
 function contentInput(form: HTMLFormElement) {
@@ -102,6 +133,10 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
         setFormErrors((current) => ({...current, [key]: errors}))
     }
 
+    function showNotice(key: string, kind: Notice["kind"], text: string) {
+        setNotice({kind, text, area: noticeArea(key)})
+    }
+
     function handleFailure(key: string, status: number, error: PublicApiError, fallback: string) {
         if (status === 401) {
             router.replace(`/login?next=/instructor/courses/${course.id}`)
@@ -109,16 +144,13 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
             return
         }
         if (status === 403) {
-            setNotice({kind: "error", text: "Você não tem permissão para alterar este curso."})
+            showNotice(key, "error", "Você não tem permissão para alterar este curso.")
             return
         }
 
         const errors = translatedErrors(error)
         setErrors(key, errors)
-        setNotice({
-            kind: "error",
-            text: Object.keys(errors).length > 0 ? "Verifique os campos destacados." : fallback,
-        })
+        showNotice(key, "error", Object.keys(errors).length > 0 ? "Verifique os campos destacados." : fallback)
     }
 
     async function run(key: string, action: () => Promise<void>) {
@@ -132,7 +164,7 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
             await action()
         } catch (error) {
             console.error("Course builder operation failed", error)
-            setNotice({kind: "error", text: "Não foi possível concluir a operação. Tente novamente."})
+            showNotice(key, "error", "Não foi possível concluir a operação. Tente novamente.")
         } finally {
             setPending("")
         }
@@ -145,7 +177,7 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
 
         if (Object.keys(errors).length > 0) {
             setErrors(key, errors)
-            setNotice({kind: "error", text: "Verifique os campos destacados."})
+            showNotice(key, "error", "Verifique os campos destacados.")
             return
         }
 
@@ -164,13 +196,13 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
             }
 
             setCourse(result.data)
-            setNotice({kind: "success", text: "Dados do curso salvos."})
+            showNotice(key, "success", "Dados do curso salvos.")
         })
     }
 
     async function uploadCover(file: File) {
         if (!imageTypes.includes(file.type) || file.size <= 0 || file.size > maxImageSize) {
-            setNotice({kind: "error", text: "Escolha uma imagem JPEG, PNG ou WebP de até 5 MB."})
+            showNotice("cover", "error", "Escolha uma imagem JPEG, PNG ou WebP de até 5 MB.")
             return
         }
 
@@ -193,7 +225,7 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
             }
 
             setCourse((current) => ({...current, imageUrl: URL.createObjectURL(file)}))
-            setNotice({kind: "success", text: "Capa atualizada."})
+            showNotice("cover", "success", "Capa atualizada.")
         })
     }
 
@@ -205,7 +237,7 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
 
         if (Object.keys(errors).length > 0) {
             setErrors(key, errors)
-            setNotice({kind: "error", text: "Verifique os campos destacados."})
+            showNotice(key, "error", "Verifique os campos destacados.")
             return
         }
 
@@ -222,7 +254,7 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
 
             setModules((items) => [...items, {...result.data, lessons: []}])
             setCourse((current) => ({...current, status: "DRAFT"}))
-            setNotice({kind: "success", text: "Módulo adicionado."})
+            showNotice(key, "success", "Módulo adicionado.")
             form.reset()
         })
     }
@@ -234,7 +266,7 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
 
         if (Object.keys(errors).length > 0) {
             setErrors(key, errors)
-            setNotice({kind: "error", text: "Verifique os campos destacados."})
+            showNotice(key, "error", "Verifique os campos destacados.")
             return
         }
 
@@ -250,7 +282,7 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
 
             setModules((items) => items.map((item) => item.id === moduleId ? {...item, ...result.data} : item))
             setEditing("")
-            setNotice({kind: "success", text: "Módulo atualizado."})
+            showNotice(key, "success", "Módulo atualizado.")
         })
     }
 
@@ -262,7 +294,7 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
 
         if (Object.keys(errors).length > 0) {
             setErrors(key, errors)
-            setNotice({kind: "error", text: "Verifique os campos destacados."})
+            showNotice(key, "error", "Verifique os campos destacados.")
             return
         }
 
@@ -281,7 +313,7 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
                 ? {...item, lessons: [...item.lessons, {...result.data, hasVideo: false}]}
                 : item))
             setCourse((current) => ({...current, status: "DRAFT"}))
-            setNotice({kind: "success", text: "Aula adicionada."})
+            showNotice(key, "success", "Aula adicionada.")
             form.reset()
         })
     }
@@ -293,7 +325,7 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
 
         if (Object.keys(errors).length > 0) {
             setErrors(key, errors)
-            setNotice({kind: "error", text: "Verifique os campos destacados."})
+            showNotice(key, "error", "Verifique os campos destacados.")
             return
         }
 
@@ -311,17 +343,17 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
                 ? {...item, lessons: item.lessons.map((lesson) => lesson.id === lessonId ? {...lesson, ...result.data} : lesson)}
                 : item))
             setEditing("")
-            setNotice({kind: "success", text: "Aula atualizada."})
+            showNotice(key, "success", "Aula atualizada.")
         })
     }
 
     async function uploadModuleImage(moduleId: number, file: File) {
+        const key = "module-image-" + moduleId
         if (!imageTypes.includes(file.type) || file.size <= 0 || file.size > maxImageSize) {
-            setNotice({kind: "error", text: "Escolha uma imagem JPEG, PNG ou WebP de até 5 MB."})
+            showNotice(key, "error", "Escolha uma imagem JPEG, PNG ou WebP de até 5 MB.")
             return
         }
 
-        const key = `module-image-${moduleId}`
         await run(key, async () => {
             const ticket = await createModuleImageUploadAction(moduleId, {
                 fileName: file.name,
@@ -342,17 +374,17 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
 
             const preview = URL.createObjectURL(file)
             setModules((items) => items.map((item) => item.id === moduleId ? {...item, imageUrl: preview} : item))
-            setNotice({kind: "success", text: "Imagem do módulo atualizada."})
+            showNotice(key, "success", "Imagem do módulo atualizada.")
         })
     }
 
     async function uploadVideo(moduleId: number, lessonId: number, file: File) {
+        const key = "video-" + lessonId
         if (!videoTypes.includes(file.type) || file.size <= 0 || file.size > maxVideoSize) {
-            setNotice({kind: "error", text: "Escolha um vídeo MP4 de até 2 GiB."})
+            showNotice(key, "error", "Escolha um vídeo MP4 de até 2 GiB.")
             return
         }
 
-        const key = `video-${lessonId}`
         await run(key, async () => {
             const ticket = await createLessonVideoUploadAction(lessonId, {
                 fileName: file.name,
@@ -374,7 +406,7 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
             setModules((items) => items.map((item) => item.id === moduleId
                 ? {...item, lessons: item.lessons.map((lesson) => lesson.id === lessonId ? {...lesson, hasVideo: true} : lesson)}
                 : item))
-            setNotice({kind: "success", text: "Vídeo enviado e confirmado."})
+            showNotice(key, "success", "Vídeo enviado e confirmado.")
         })
     }
 
@@ -393,7 +425,7 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
 
             setModules((items) => items.filter((item) => item.id !== moduleId))
             setCourse((current) => ({...current, status: "DRAFT"}))
-            setNotice({kind: "success", text: "Módulo excluído."})
+            showNotice(key, "success", "Módulo excluído.")
         })
     }
 
@@ -414,7 +446,7 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
                 ? {...item, lessons: item.lessons.filter((lesson) => lesson.id !== lessonId)}
                 : item))
             setCourse((current) => ({...current, status: "DRAFT"}))
-            setNotice({kind: "success", text: "Aula excluída."})
+            showNotice(key, "success", "Aula excluída.")
         })
     }
 
@@ -435,7 +467,7 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
             }
 
             setModules(next)
-            setNotice({kind: "success", text: "Ordem dos módulos atualizada."})
+            showNotice("reorder-modules", "success", "Ordem dos módulos atualizada.")
         })
     }
 
@@ -460,22 +492,40 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
             }
 
             setModules((items) => items.map((item) => item.id === moduleId ? {...item, lessons} : item))
-            setNotice({kind: "success", text: "Ordem das aulas atualizada."})
+            showNotice(key, "success", "Ordem das aulas atualizada.")
         })
     }
 
     async function publish() {
+        const lessonsWithoutVideo = modules.reduce(
+            (total, module) => total + module.lessons.filter((lesson) => !lesson.hasVideo).length,
+            0,
+        )
+        const missingRequirements = [
+            !course.imageUrl ? "adicione uma capa ao curso" : "",
+            modules.length === 0 ? "adicione ao menos um módulo" : "",
+            lessonCount === 0 ? "adicione ao menos uma aula" : "",
+            lessonsWithoutVideo === 1 ? "envie o vídeo da aula que ainda está sem vídeo" : "",
+            lessonsWithoutVideo > 1 ? "envie os vídeos das " + lessonsWithoutVideo + " aulas que ainda estão sem vídeo" : "",
+        ].filter(Boolean)
+        const requirementsText = missingRequirements.length > 1
+            ? missingRequirements.slice(0, -1).join(", ") + " e " + missingRequirements.at(-1)
+            : missingRequirements[0]
+        const publicationFallback = requirementsText
+            ? "Antes de publicar, " + requirementsText + "."
+            : "O curso ainda não atende aos requisitos de publicação. Revise os itens indicados."
+
         await run("publish", async () => {
             const result = await publishCourseAction(course.id)
             if (!result.success) {
                 handleFailure("publish", result.status, result.error, result.status === 409
-                    ? "Antes de publicar, adicione uma capa, um módulo, ao menos uma aula e um vídeo para cada aula."
+                    ? publicationFallback
                     : "Não foi possível publicar o curso.")
                 return
             }
 
             setCourse(result.data)
-            setNotice({kind: "success", text: "Curso publicado com sucesso."})
+            showNotice("publish", "success", "Curso publicado com sucesso.")
         })
     }
 
@@ -498,24 +548,7 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
 
     return (
         <div className="space-y-6">
-            {notice && (
-                <div
-                    className={notice.kind === "error"
-                        ? "fixed inset-x-4 bottom-4 z-[60] flex items-start gap-3 rounded-xl border border-destructive/20 bg-white p-4 text-sm text-destructive shadow-2xl sm:left-auto sm:right-6 sm:w-96"
-                        : "fixed inset-x-4 bottom-4 z-[60] flex items-start gap-3 rounded-xl border border-emerald-200 bg-white p-4 text-sm text-emerald-800 shadow-2xl sm:left-auto sm:right-6 sm:w-96"}
-                    role={notice.kind === "error" ? "alert" : "status"}
-                    aria-live="polite"
-                >
-                    {notice.kind === "error"
-                        ? <CircleAlert className="mt-0.5 size-5 shrink-0" />
-                        : <CheckCircle2 className="mt-0.5 size-5 shrink-0" />}
-                    <span className="flex-1 leading-relaxed">{notice.text}</span>
-                    <button type="button" onClick={() => setNotice(null)} className="rounded-md p-1 text-current/70 hover:bg-black/5 hover:text-current">
-                        <X className="size-4" />
-                        <span className="sr-only">Fechar aviso</span>
-                    </button>
-                </div>
-            )}
+            {notice?.area === "course" && <NoticeMessage notice={notice} />}
 
             <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
                 <Card className="h-fit">
@@ -594,6 +627,8 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
                 <h2 className="text-2xl font-bold">Módulos e aulas</h2>
             </div>
 
+            {notice?.area === "content" && <NoticeMessage notice={notice} />}
+
             {modules.map((module, moduleIndex) => {
                 const moduleKey = `edit-module-${module.id}`
 
@@ -616,7 +651,7 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
                             <Button type="button" variant="ghost" size="icon" onClick={() => void moveModule(moduleIndex, -1)} disabled={busy || moduleIndex === 0}><ArrowUp /><span className="sr-only">Mover módulo para cima</span></Button>
                             <Button type="button" variant="ghost" size="icon" onClick={() => void moveModule(moduleIndex, 1)} disabled={busy || moduleIndex === modules.length - 1}><ArrowDown /><span className="sr-only">Mover módulo para baixo</span></Button>
                             <Button type="button" variant="ghost" size="icon" onClick={() => setEditing(editing === moduleKey ? "" : moduleKey)} disabled={busy}><Pencil /><span className="sr-only">Editar módulo</span></Button>
-                            <label className={`inline-flex items-center gap-2 rounded-lg px-2 text-xs font-semibold text-primary hover:bg-white ${busy ? "pointer-events-none opacity-50" : "cursor-pointer"}`}>
+                            <label className={`inline-flex items-center gap-2 rounded-lg p-2 text-xs font-semibold text-primary hover:bg-white ${busy ? "pointer-events-none opacity-50" : "cursor-pointer"}`}>
                                 <ImagePlus className="size-4" />{pending === `module-image-${module.id}` ? "Enviando..." : module.imageUrl ? "Substituir imagem" : "Adicionar imagem"}
                                 <input type="file" accept={imageTypes.join(",")} className="sr-only" disabled={busy} onChange={(event) => {
                                     const file = event.currentTarget.files?.[0]
