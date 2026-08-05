@@ -11,7 +11,7 @@ import type { LoginState } from "@/types/auth/login-state"
 
 const initialState: LoginState = {}
 
-export function LoginForm() {
+export function LoginForm({nextPath}: {nextPath: string}) {
     const [visible, setVisible] = useState(false);
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -23,6 +23,7 @@ export function LoginForm() {
 
     return (
         <form action={formAction} className="space-y-5">
+            <input type="hidden" name="next" value={nextPath} />
             <div className="flex flex-col gap-2">
                 <div className="space-y-2">
                     <Label htmlFor="email">E-mail</Label>
