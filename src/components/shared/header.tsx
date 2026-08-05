@@ -29,6 +29,19 @@ function Navigation({ session }: Pick<HeaderProps, "session">) {
     )
 }
 
+function UserAvatar({ user }: Pick<HeaderProps, "user">) {
+    if (!user?.pictureUrl) {
+        return <UserRound className="size-4" />
+    }
+
+    return (
+        <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={user.pictureUrl} alt="" className="size-6 shrink-0 rounded-full object-cover" />
+        </>
+    )
+}
+
 export function Header({ session, user }: HeaderProps) {
     return (
         <header className="sticky top-0 z-50 border-b border-border/70 bg-white/90 backdrop-blur-xl">
@@ -41,7 +54,7 @@ export function Header({ session, user }: HeaderProps) {
                     {session.authenticated ? (
                         <>
                             <Link href="/profile" className={cn(buttonVariants({ variant: "secondary", size: "sm" }), "max-w-52")}>
-                                <UserRound /> <span className="truncate">{user?.name ?? session.email}</span>
+                                <UserAvatar user={user} /> <span className="truncate">{user?.name ?? session.email}</span>
                             </Link>
                             <LogoutButton compact />
                         </>
@@ -64,7 +77,7 @@ export function Header({ session, user }: HeaderProps) {
                         {session.authenticated ? (
                             <>
                                 <Link href="/profile" className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium">
-                                    <UserRound className="size-4" />{user?.name ?? "Meu perfil"}
+                                    <UserAvatar user={user} />{user?.name ?? "Meu perfil"}
                                 </Link>
                                 <LogoutButton compact />
                             </>
