@@ -3,7 +3,4 @@ export type UserProfileInput = {
     email?: string
     birthday?: string
     phone?: string
-    city?: string
-    state?: string
-    country?: string
 }
