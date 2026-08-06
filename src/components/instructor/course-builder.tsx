@@ -137,6 +137,9 @@ export function CourseBuilder({initialCourse, initialModules}: {initialCourse: C
 
     function showNotice(key: string, kind: Notice["kind"], text: string) {
         setNotice({kind, text, area: noticeArea(key)})
+        if (key === "publish") {
+            window.scrollTo({top: 0, behavior: "smooth"})
+        }
     }
 
     function handleFailure(key: string, status: number, error: PublicApiError, fallback: string) {
