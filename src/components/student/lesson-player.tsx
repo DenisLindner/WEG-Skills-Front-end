@@ -1,11 +1,12 @@
 "use client"
 
 import {useActionState, useState} from "react";
-import {CheckCircle2, LoaderCircle, RefreshCw} from "lucide-react";
+import {ArrowRight, CheckCircle2, LoaderCircle, RefreshCw} from "lucide-react";
 import {completeLessonAction, type CompleteLessonState} from "@/actions/lesson/complete-lesson-action";
 import {findLessonByIdAction, type LessonState} from "@/actions/lesson/find-lesson-by-id-action";
-import {Button} from "@/components/ui/button";
+import {Button, buttonVariants} from "@/components/ui/button";
 import {LessonDetails} from "@/types/lesson/lesson-details";
+import Link from "next/link";
 
 const initialLessonState: LessonState = {};
 const initialCompletionState: CompleteLessonState = {};
@@ -14,10 +15,12 @@ export function LessonPlayer({
     lesson: initialLesson,
     courseId,
     completed,
+    nextLessonId,
 }: {
     lesson: LessonDetails;
     courseId: number;
     completed: boolean;
+    nextLessonId?: number;
 }) {
     const renewAction = findLessonByIdAction.bind(null, initialLesson.id);
     const [renewState, renewFormAction, renewing] = useActionState(renewAction, initialLessonState);
@@ -39,7 +42,10 @@ export function LessonPlayer({
                     <video
                         key={lesson.videoUrl}
                         controls
-                        preload="metadata"
+                        autoPlay
+                        playsInline
+                        preload="auto"
+                        controlsList="nodownload"
                         src={lesson.videoUrl}
                         className="h-full w-full"
                         onError={() => setVideoError("O acesso ao vídeo expirou. Renove para continuar.")}
@@ -65,6 +71,16 @@ export function LessonPlayer({
                         {renewing ? "Renovando..." : "Renovar acesso ao vídeo"}
                     </Button>
                 </form>
+
+                {nextLessonId && (
+                    <Link
+                        href={`/student/course/${courseId}/lesson/${nextLessonId}`}
+                        className={buttonVariants({variant: "secondary"})}
+                    >
+                        Próxima aula
+                        <ArrowRight />
+                    </Link>
+                )}
             </div>
 
             <div className="mt-3 text-sm" aria-live="polite">
