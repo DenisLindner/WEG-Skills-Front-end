@@ -127,7 +127,6 @@ Com a configuração local padrão:
 | `/login` | Público | Autenticação |
 | `/register` | Público | Cadastro de aluno |
 | `/certificate` | Público | Validação de certificado |
-| `/style-guide` | Público | Guia visual da aplicação |
 | `/courses` | Autenticado | Catálogo de cursos |
 | `/courses/[courseId]` | Autenticado | Detalhes e matrícula |
 | `/student` | Aluno | Cursos e progresso |
@@ -178,7 +177,7 @@ Uploads de imagens e vídeos usam tickets temporários: o navegador envia o arqu
 - o redirecionamento pós-login aceita somente caminhos internos;
 - o projeto não injeta HTML fornecido pelo usuário.
 
-Consulte também o [Style Guide](./docs/STYLE_GUIDE.md) e a página `/style-guide`.
+Consulte também o [Style Guide]([./docs/STYLE_GUIDE.md](https://www.figma.com/design/sgVEZABGPrqOkfilDGrK6y/Style-Guide-Weg-Skills?node-id=538-2&t=MuU73mgS9lBNbgvi-1)).
 
 ## Testes
 
@@ -195,7 +194,7 @@ npm run lint
 npm run build
 ```
 
-Os testes documentados são smoke tests manuais e visuais. Eles devem ser refeitos sempre que a versão candidata à entrega mudar.
+Os testes documentados são smoke tests manuais e visuais.
 
 ## Limitações conhecidas
 
