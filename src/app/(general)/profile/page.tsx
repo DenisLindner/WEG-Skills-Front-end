@@ -29,7 +29,7 @@ export default async function ProfilePage() {
                 <p className="mb-2 text-sm font-bold uppercase tracking-[0.18em] text-primary">Minha conta</p>
                 <h1 className="text-4xl font-bold tracking-tight">Perfil e segurança</h1>
             </div>
-            <ProfileClient profile={profile} />
+            <ProfileClient profile={profile} canDeleteAccount={!session.roles.includes("ADMIN")} />
         </main>
     )
 }

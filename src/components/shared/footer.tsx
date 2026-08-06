@@ -13,23 +13,23 @@ export default function Footer() {
                 <div>
                     <h2 className="mb-3 text-sm font-semibold">Explore</h2>
                     <nav className="flex flex-col gap-2 text-sm text-white/70">
-                        <Link href="/courses">Cursos</Link>
-                        <Link href="/certificate">Validar certificado</Link>
-                        <Link href="/about">Sobre o projeto</Link>
+                        <Link href="/courses" className="transition-colors hover:text-white">Cursos</Link>
+                        <Link href="/certificate" className="transition-colors hover:text-white">Validar certificado</Link>
+                        <Link href="/about" className="transition-colors hover:text-white">Sobre o projeto</Link>
                     </nav>
                 </div>
                 <div>
                     <h2 className="mb-3 text-sm font-semibold">WEG</h2>
                     <div className="flex gap-3">
-                        <a href="https://www.linkedin.com/company/weg" target="_blank" rel="noreferrer" className="rounded-lg bg-white/10 p-2 hover:bg-white/20">
+                        <a href="https://www.linkedin.com/company/weg" target="_blank" rel="noreferrer" className="rounded-lg bg-white/10 p-2 transition-colors hover:bg-white/20">
                             <FaLinkedin className="size-5" />
                             <span className="sr-only">LinkedIn</span>
                         </a>
-                        <a href="https://www.youtube.com/@weg_group" target="_blank" rel="noreferrer" className="rounded-lg bg-white/10 p-2 hover:bg-white/20">
+                        <a href="https://www.youtube.com/@weg_group" target="_blank" rel="noreferrer" className="rounded-lg bg-white/10 p-2 transition-colors hover:bg-white/20">
                             <FaYoutube className="size-5" />
                             <span className="sr-only">YouTube</span>
                         </a>
-                        <a href="https://www.instagram.com/weg.group" target="_blank" rel="noreferrer" className="rounded-lg bg-white/10 p-2 hover:bg-white/20">
+                        <a href="https://www.instagram.com/weg.group" target="_blank" rel="noreferrer" className="rounded-lg bg-white/10 p-2 transition-colors hover:bg-white/20">
                             <FaInstagram className="size-5" />
                             <span className="sr-only">Instagram</span>
                         </a>
