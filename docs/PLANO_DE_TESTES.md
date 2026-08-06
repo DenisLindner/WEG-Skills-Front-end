@@ -19,7 +19,6 @@
 | AV-04 | Cadastro | Conferir formulário e controles de entrada | Front-end em execução | `/register`, 1440 × 1000 | Abrir a rota e capturar a página | Nome, e-mail, senha, confirmação e ação de cadastro aparecem organizados | Média | Equipe |
 | AV-05 | Falha de API | Conferir erro seguro quando um serviço não responde | Front-end apontando para uma API indisponível | `/certificate?code=CODIGO-INVALIDO` | Abrir a rota e capturar o resultado | A aplicação mostra mensagem segura e mantém a ação disponível para nova tentativa | Alta | Equipe |
 | AV-06 | Página inexistente | Conferir feedback de navegação inválida | Front-end em execução | `/pagina-inexistente` | Abrir a rota e capturar a página | Página 404 explica o problema e oferece retorno ao início | Média | Equipe |
-| AV-07 | Style Guide | Conferir os elementos do sistema visual | Front-end em execução | `/style-guide`, 1440 × 3000 | Abrir a rota e capturar a página completa | Cores, tipografia, espaçamento, botões, campos, cards e feedbacks são exibidos | Alta | Equipe |
 
 ## Fora do escopo desta rodada
 
@@ -27,4 +26,4 @@ Esta rodada é propositalmente simples e visual. Não cobre carga, concorrência
 
 ## Registro
 
-Os resultados, problemas e retestes ficam em `docs/EXECUCAO_DE_TESTES.md`. As imagens ficam em `docs/evidencias` e usam o ID do caso no nome do arquivo.
+Os resultados, problemas e testes ficam em `docs/EXECUCAO_DE_TESTES.md`. As imagens ficam em `docs/evidencias` e usam o ID do caso no nome do arquivo.

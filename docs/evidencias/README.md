@@ -12,10 +12,3 @@ Cada arquivo começa pelo ID do teste para manter rastreabilidade entre plano, e
 | AV-04 | [Cadastro](./AV-04-cadastro.png) | 1440 × 1000 |
 | AV-05 | [API indisponível](./AV-05-api-indisponivel.png) | 1440 × 1000 |
 | AV-06 | [Página 404](./AV-06-pagina-404.png) | 1440 × 1000 |
-| AV-07 | [Style Guide](./AV-07-style-guide.png) | 1440 × 3000 |
-
-Com a aplicação em execução, as capturas podem ser refeitas com:
-
-```bash
-bash scripts/capture-visual-evidence.sh
-```
