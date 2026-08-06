@@ -87,7 +87,7 @@ function translatePasswordErrors(errors: ApiFieldErrors) {
     return translated
 }
 
-export function ProfileClient({ profile }: { profile: UserProfile }) {
+export function ProfileClient({ profile, canDeleteAccount }: { profile: UserProfile; canDeleteAccount: boolean }) {
     const [pending, setPending] = useState("")
     const [notice, setNotice] = useState<Notice | null>(null)
     const [noticePassword, setNoticePassword] = useState<Notice | null>(null)
@@ -509,15 +509,17 @@ export function ProfileClient({ profile }: { profile: UserProfile }) {
                         </form>
                     </CardContent>
                 </Card>
-                <Card className="border-destructive/20">
-                    <CardHeader>
-                        <CardTitle className="text-destructive">Zona de risco</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="mb-4 text-sm text-muted-foreground">Contas responsáveis por cursos não podem ser excluídas até que esses cursos sejam removidos.</p>
-                        <Button type="button" variant="destructive" onClick={removeAccount} disabled={busy}>{pending === "delete" ? <LoaderCircle className="animate-spin" /> : <Trash2 />}Excluir minha conta</Button>
-                    </CardContent>
-                </Card>
+                {canDeleteAccount && (
+                    <Card className="border-destructive/20">
+                        <CardHeader>
+                            <CardTitle className="text-destructive">Zona de risco</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="mb-4 text-sm text-muted-foreground">Contas responsáveis por cursos não podem ser excluídas até que esses cursos sejam removidos.</p>
+                            <Button type="button" variant="destructive" onClick={removeAccount} disabled={busy}>{pending === "delete" ? <LoaderCircle className="animate-spin" /> : <Trash2 />}Excluir minha conta</Button>
+                        </CardContent>
+                    </Card>
+                )}
             </div>
         </div>
     )
