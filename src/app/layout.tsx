@@ -1,28 +1,18 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-
-const interSans = Inter({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import type { Metadata } from "next"
+import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "WEG Skills",
-  description: "Buildt by CentroWEG",
+    title: { default: "WEG Skills", template: "%s | WEG Skills" },
+    description: "Conhecimento técnico que conecta pessoas, indústria e futuro.",
+    icons: {
+        icon: "/assets/icons/favicon.png",
+    }
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html
-      lang="pt-BR"
-      className={`${interSans.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
-    </html>
-  );
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+    return (
+        <html lang="pt-BR">
+            <body>{children}</body>
+        </html>
+    )
 }

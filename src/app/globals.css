@@ -1,19 +1,70 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter-sans);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-app);
+  --font-heading: var(--font-app);
+  --radius-sm: calc(var(--radius) * 0.7);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) * 1.25);
+  --radius-xl: calc(var(--radius) * 1.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --font-app: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --background: oklch(0.985 0.004 240);
+  --foreground: oklch(0.245 0.035 245);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.245 0.035 245);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.245 0.035 245);
+  --primary: oklch(0.43 0.125 245);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.945 0.018 242);
+  --secondary-foreground: oklch(0.34 0.09 245);
+  --muted: oklch(0.955 0.009 240);
+  --muted-foreground: oklch(0.51 0.026 245);
+  --accent: oklch(0.91 0.04 235);
+  --accent-foreground: oklch(0.32 0.09 245);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.89 0.015 240);
+  --input: oklch(0.89 0.015 240);
+  --ring: oklch(0.53 0.12 242);
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  html { @apply font-sans; scroll-behavior: smooth; }
+  body {
+    @apply min-h-screen bg-background text-foreground antialiased;
+    background-image:
+            radial-gradient(circle at 12% 8%, color-mix(in oklch, var(--accent) 55%, transparent), transparent 26rem),
+            linear-gradient(180deg, #ffffff 0%, var(--background) 38%);
   }
+  button, a { @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2; }
+}
+
+@layer utilities {
+  .content-grid { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+  .text-balance { text-wrap: balance; }
 }
