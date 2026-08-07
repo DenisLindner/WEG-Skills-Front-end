@@ -97,6 +97,14 @@ npm run dev
 
 Acesse [http://localhost:3000](http://localhost:3000).
 
+Para publicar temporariamente o ambiente de desenvolvimento por HTTPS com um Quick Tunnel da Cloudflare:
+
+```bash
+npm run dev:tunnel
+```
+
+O comando inicia o Next.js e o túnel, prioriza HTTP/2 para redes institucionais com UDP restrito e aceita `cloudflared` local ou Docker no Linux. Consulte o guia de [Quick Tunnel na rede SENAI](./docs/QUICK_TUNNEL.md) para pré-requisitos, firewall, diagnóstico e limitações.
+
 Build e execução de produção:
 
 ```bash
